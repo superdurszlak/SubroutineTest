@@ -153,7 +153,7 @@ venv.bak/
 *.app
 
 # Project-specific stuff
-materials/
-!materials/example_*/*.for
-!materials/example_*/*.json
-!materials/example_*/*.lib
+models/
+!models/example_*/*.for
+!models/example_*/*.json
+!models/example_*/*.lib

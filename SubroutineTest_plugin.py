@@ -1,11 +1,13 @@
 from abaqusGui import getAFXApp
+
 from config import VERSION
+
 
 # Root function for the plugin
 def init():
     # Abaqus 'Plugins' toolset
     toolset = getAFXApp().getAFXMainWindow().getPluginToolset()
-    # Attach 'ImpactTest' plugin to the toolset
+    # Attach 'SubroutineTest' plugin to the toolset
     toolset.registerKernelMenuButton(
         buttonText='Subroutine Test',
         # Plugin's main module
@@ -13,9 +15,9 @@ def init():
         # Module's function to be invoked
         functionName="run()",
         author='Szymon Durak',
-        description='Ballistic impact model designer',
+        description='User-defined constitutive models testing tool',
         version=VERSION,
-        helpUrl='https://github.com/superdurszlak/ImpactTest/blob/master/README.md'
+        helpUrl='https://github.com/superdurszlak/SubroutineTest/blob/master/README.md'
     )
 
 

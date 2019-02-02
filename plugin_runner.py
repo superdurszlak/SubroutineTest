@@ -5,7 +5,7 @@ import tkFileDialog
 from abaqus import mdb, session
 from abaqusConstants import *
 
-from src.main_gui import MainGUI
+from src.gui_main_window import GuiMainWindow
 
 
 def run():
@@ -14,4 +14,5 @@ def run():
         antiAlias=OFF,
         translucencyMode=1
     )
-    gui = MainGUI()
+    gui = GuiMainWindow()
+    gui.run()
