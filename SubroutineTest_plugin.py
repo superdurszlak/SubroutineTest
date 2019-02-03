@@ -11,9 +11,9 @@ def init():
     toolset.registerKernelMenuButton(
         buttonText='Subroutine Test',
         # Plugin's main module
-        moduleName="plugin_runner",
+        moduleName='plugin_runner',
         # Module's function to be invoked
-        functionName="run()",
+        functionName='run()',
         author='Szymon Durak',
         description='User-defined constitutive models testing tool',
         version=VERSION,

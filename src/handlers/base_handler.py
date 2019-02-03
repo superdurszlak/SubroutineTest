@@ -14,7 +14,7 @@ class BaseHandler:
         :param frame: Frame object to which UI controls will be bound
         """
         if not isinstance(frame, Frame):
-            raise TypeError("frame argument must be of type Tkinter.Frame, but %s was found" % type(frame))
+            raise TypeError('frame argument must be of type Tkinter.Frame, but %s was found' % type(frame))
         self.frame = frame
         self._configure()
 
