@@ -48,6 +48,5 @@ class GuiMainWindow:
         pass
 
     def __load_material_models(self):
-        contents = [os.path.join(config.MODEL_DIR, c) for c in os.listdir(config.MODEL_DIR)]
-        subdirs = [d for d in contents if os.path.isdir(d) and utils.is_valid_model_dir(d)]
+        pass
 

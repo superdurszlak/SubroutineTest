@@ -31,7 +31,12 @@ def __is_valid_config_file(config_file):
     with open(config_file, 'r') as fp:
         try:
             cfg = json.load(fp)
+            name = cfg['name']
+            if type(name) is not str:
+                return False
             variables = cfg['variables']
+            if type(variables) is not list:
+                return False
             variables.sort(key=lambda x: x['identifier'])
             for counter, v in enumerate(variables):
                 name = v['name']
