@@ -22,19 +22,19 @@ class GuiMainWindow:
         self.__create_basic_controls()
         self.__load_material_models()
         side_frames_width = config.MIN_WIDTH / 2
-        bottom_frame_width = config.MIN_WIDTH + config.FRAME_PADDING * 2
         bottom_frame_height = 50
         side_frames_height = config.MIN_HEIGHT
-        self.simulation_type_frame = Frame(self.master, width=side_frames_width, height=side_frames_height,
-                                           borderwidth=config.FRAME_BORDER_WIDTH, relief=config.FRAME_RELIEF)
+        self.simulation_type_frame = LabelFrame(self.master, text='Simulation settings', width=side_frames_width,
+                                                height=side_frames_height, borderwidth=config.FRAME_BORDER_WIDTH,
+                                                relief=config.FRAME_RELIEF)
         self.simulation_type_frame.grid(row=0, column=0, padx=config.FRAME_PADDING, pady=config.FRAME_PADDING,
                                         sticky=N + W + S + E)
         self.materials_frame = Frame(self.master, width=side_frames_width, height=side_frames_height)
-        self.materials_frame.grid(row=0, column=1, sticky=N + W + S + E, padx=config.ELEMENT_PADDING,
-                                  pady=config.ELEMENT_PADDING)
-        self.controls_frame = Frame(self.master, width=bottom_frame_width, height=bottom_frame_height,
-                                    borderwidth=config.FRAME_BORDER_WIDTH, relief=config.FRAME_RELIEF)
-        self.controls_frame.grid(row=1, column=0, columnspan=2, padx=config.FRAME_PADDING, pady=config.FRAME_PADDING)
+        self.materials_frame.grid(row=0, column=1, sticky=N + W + S + E)
+        self.controls_frame = Frame(self.master, height=bottom_frame_height, borderwidth=config.FRAME_BORDER_WIDTH,
+                                    relief=config.FRAME_RELIEF)
+        self.controls_frame.grid(row=1, column=0, sticky=E + W, columnspan=2, padx=config.FRAME_PADDING,
+                                 pady=config.FRAME_PADDING)
 
         self.simulation_type_handler = SimulationTypeHandler(self.simulation_type_frame)
         self.materials_handler = MaterialsHandler(self.materials_frame)

@@ -1,8 +1,6 @@
 from Tkinter import *
-import ttk
-import tkFileDialog
 
-from abaqus import mdb, session
+from abaqus import session
 from abaqusConstants import *
 
 from src.gui_main_window import GuiMainWindow
