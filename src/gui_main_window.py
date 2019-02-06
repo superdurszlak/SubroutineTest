@@ -36,8 +36,8 @@ class GuiMainWindow:
         self.controls_frame.grid(row=1, column=0, sticky=E + W, columnspan=2, padx=config.FRAME_PADDING,
                                  pady=config.FRAME_PADDING)
 
-        self.simulation_type_handler = SimulationTypeHandler(self.simulation_type_frame)
         self.materials_handler = MaterialsHandler(self.materials_frame)
+        self.simulation_type_handler = SimulationTypeHandler(self.simulation_type_frame)
 
     def run(self):
         """

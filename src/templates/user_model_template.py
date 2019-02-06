@@ -1,18 +1,18 @@
 from Tkinter import *
 
 import config
-from src.models.basic_model import BasicModel
-from src.models.constitutive_model import ConstitutiveModel
 
 
 class UserModelTemplate(Frame):
     def __init__(self, master, name, basic_model, constitutive_model, **kw):
         Frame.__init__(self, master, borderwidth=config.FRAME_BORDER_WIDTH, relief=config.FRAME_RELIEF,
                        width=master.winfo_width() - 2 * config.FRAME_PADDING, **kw)
-        if not isinstance(basic_model, BasicModel):
-            raise TypeError('basic_model must be instance of BasicModel')
-        if not isinstance(constitutive_model, ConstitutiveModel):
-            raise TypeError('constitutive_model must be instance of ConstitutiveModel')
+        self.name = name
+        try:
+            self.master.subscribe(self)
+        except KeyError:
+            self.destroy()
+            raise
 
         self.density = basic_model.density_variable.get()
         self.elastic_modulus = basic_model.elastic_variable.get()
@@ -23,7 +23,6 @@ class UserModelTemplate(Frame):
         self.user_variables = [v[config.KEY_HOLDER].get() for v in constitutive_model.variables]
 
         self.pack(fill=X, expand=1, padx=config.FRAME_PADDING, pady=config.FRAME_PADDING)
-        self.name = name
         self.grid_columnconfigure(0, weight=2)
         self.grid_columnconfigure(1, weight=2)
         self.grid_columnconfigure(2, weight=2)
@@ -49,4 +48,4 @@ class UserModelTemplate(Frame):
                                   pady=config.ELEMENT_PADDING)
 
     def __on_delete_click(self):
-        self.destroy()
+        self.master.remove(self.name)

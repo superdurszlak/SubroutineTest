@@ -13,8 +13,8 @@ from src.templates.user_model_template import UserModelTemplate
 
 class MaterialEditorHandler(BaseHandler):
     def __init__(self, frame, materials_container):
-        super(MaterialEditorHandler, self).__init__(frame)
         self.__materials_container = materials_container
+        super(MaterialEditorHandler, self).__init__(frame)
 
     def _configure(self):
         self.__load_models()
