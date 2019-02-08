@@ -41,10 +41,24 @@ class MaterialEditorHandler(BaseHandler):
         self.model_variables_frame.grid_columnconfigure(1, weight=2)
         self.model_variables_frame.grid_columnconfigure(2, weight=1)
         self.model_variables_frame.grid_columnconfigure(3, weight=4)
+
         self.__on_model_selected()
 
-        self.create_model_button = Button(self.frame, text="Create", command=self.__on_create_click)
-        self.create_model_button.grid(column=0, row=3, sticky=S + W, padx=config.FRAME_PADDING,
+        self.options_frame = Frame(self.frame)
+        self.options_frame.grid(column=0, row=3, columnspan=3, sticky=N + W + S, padx=config.FRAME_PADDING,
+                                pady=config.FRAME_PADDING)
+
+        self.model_variable_label = Label(self.options_frame, text='Model name:')
+        self.model_variable_label.grid(column=0, row=0, sticky=W, padx=config.FRAME_PADDING,
+                                       pady=config.FRAME_PADDING)
+
+        self.model_name_variable = StringVar()
+        self.model_variable_entry = Entry(self.options_frame, textvariable=self.model_name_variable)
+        self.model_variable_entry.grid(column=1, row=0, sticky=W, padx=config.FRAME_PADDING,
+                                       pady=config.FRAME_PADDING)
+
+        self.create_model_button = Button(self.options_frame, text='Create', command=self.__on_create_click)
+        self.create_model_button.grid(column=2, row=0, sticky=W, padx=config.FRAME_PADDING,
                                       pady=config.FRAME_PADDING)
 
     def generate_material(self):
@@ -83,5 +97,5 @@ class MaterialEditorHandler(BaseHandler):
         :return: None
         """
         selected_model = self.models[self.chosen_model_variable.get()]
-        UserModelTemplate(name=selected_model.name, master=self.__materials_container,
+        UserModelTemplate(name=self.model_variable_entry.get(), master=self.__materials_container,
                           basic_model=self.basic_model, constitutive_model=selected_model)

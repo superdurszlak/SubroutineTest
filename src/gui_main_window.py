@@ -21,22 +21,42 @@ class GuiMainWindow:
         self.master.minsize(config.MIN_WIDTH, config.MIN_HEIGHT)
         self.__create_basic_controls()
         self.__load_material_models()
-        side_frames_width = config.MIN_WIDTH / 2
+        settings_frame_width = config.MIN_WIDTH / 3
+        material_frame_width = config.MIN_WIDTH - settings_frame_width
         bottom_frame_height = 50
         side_frames_height = config.MIN_HEIGHT
-        self.simulation_type_frame = LabelFrame(self.master, text='Simulation settings', width=side_frames_width,
+        self.simulation_type_frame = LabelFrame(self.master, text='Simulation settings', width=settings_frame_width,
                                                 height=side_frames_height, borderwidth=config.FRAME_BORDER_WIDTH,
                                                 relief=config.FRAME_RELIEF)
         self.simulation_type_frame.grid(row=0, column=0, padx=config.FRAME_PADDING, pady=config.FRAME_PADDING,
                                         sticky=N + W + S + E)
-        self.materials_frame = Frame(self.master, width=side_frames_width, height=side_frames_height)
+        self.materials_frame = Frame(self.master, width=material_frame_width, height=side_frames_height)
         self.materials_frame.grid(row=0, column=1, sticky=N + W + S + E)
         self.controls_frame = Frame(self.master, height=bottom_frame_height, borderwidth=config.FRAME_BORDER_WIDTH,
                                     relief=config.FRAME_RELIEF)
         self.controls_frame.grid(row=1, column=0, sticky=E + W, columnspan=2, padx=config.FRAME_PADDING,
                                  pady=config.FRAME_PADDING)
 
-        self.materials_handler = MaterialsHandler(self.materials_frame)
+        self.materials_canvas = Canvas(self.materials_frame, width=material_frame_width, bd=0, highlightthickness=0,
+                                       relief='ridge')
+        self.materials_canvas.pack(side=LEFT, fill=BOTH, expand=1)
+        self.materials_scrollbar = Scrollbar(self.materials_frame, orient='vertical',
+                                             command=self.materials_canvas.yview)
+        self.materials_scrollbar.pack(side=RIGHT, fill=Y, expand=1)
+        self.materials_canvas.config(yscrollcommand=self.materials_scrollbar.set)
+        self.materials_inner_frame = Frame(self.materials_canvas)
+        self.materials_inner_frame.pack(fill=BOTH, expand=1)
+        self.materials_canvas.create_window((0, 0), window=self.materials_inner_frame, anchor=NW)
+
+        def _adjust_width(_):
+            if self.materials_inner_frame.winfo_reqwidth() != self.materials_canvas.winfo_width():
+                self.materials_inner_frame.config(width=self.materials_inner_frame.winfo_reqwidth())
+
+        self.materials_canvas.bind('<Configure>', _adjust_width)
+        self.materials_inner_frame.bind('<Configure>', lambda _: self.materials_canvas.configure(
+            scrollregion=self.materials_canvas.bbox("all")))
+
+        self.materials_handler = MaterialsHandler(self.materials_inner_frame)
         self.simulation_type_handler = SimulationTypeHandler(self.simulation_type_frame)
 
     def run(self):

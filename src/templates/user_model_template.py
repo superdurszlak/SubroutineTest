@@ -8,11 +8,6 @@ class UserModelTemplate(Frame):
         Frame.__init__(self, master, borderwidth=config.FRAME_BORDER_WIDTH, relief=config.FRAME_RELIEF,
                        width=master.winfo_width() - 2 * config.FRAME_PADDING, **kw)
         self.name = name
-        try:
-            self.master.subscribe(self)
-        except KeyError:
-            self.destroy()
-            raise
 
         self.density = basic_model.density_variable.get()
         self.elastic_modulus = basic_model.elastic_variable.get()
@@ -23,29 +18,28 @@ class UserModelTemplate(Frame):
         self.user_variables = [v[config.KEY_HOLDER].get() for v in constitutive_model.variables]
 
         self.pack(fill=X, expand=1, padx=config.FRAME_PADDING, pady=config.FRAME_PADDING)
-        self.grid_columnconfigure(0, weight=2)
-        self.grid_columnconfigure(1, weight=2)
-        self.grid_columnconfigure(2, weight=2)
-        self.grid_columnconfigure(3, weight=1)
+        self.grid_columnconfigure(0, weight=9)
+        self.grid_columnconfigure(1, weight=1)
 
-        quoted_name = 'Name: %s' % name
-        self.__material_name_label = Label(self, text=quoted_name)
+        quoted_name = '"%s"' % name
+
+        material_type = '%s model' % constitutive_model.name
+
+        variable_string = '%d model variables' % len(constitutive_model.variables)
+
+        label_text = '%s, %s, %s' % (quoted_name, material_type, variable_string)
+        self.__material_name_label = Label(self, text=label_text)
         self.__material_name_label.grid(row=0, column=0, sticky=W, padx=config.ELEMENT_PADDING,
                                         pady=config.ELEMENT_PADDING)
 
-        material_type = 'Type: %s' % constitutive_model.name
-        self.__material_type_label = Label(self, text=material_type)
-        self.__material_type_label.grid(row=0, column=1, sticky=W, padx=config.ELEMENT_PADDING,
-                                        pady=config.ELEMENT_PADDING)
-
-        variable_string = '(%d model variables)' % len(constitutive_model.variables)
-        self.__variables_label = Label(self, text=variable_string)
-        self.__variables_label.grid(row=0, column=2, sticky=W, padx=config.ELEMENT_PADDING,
-                                    pady=config.ELEMENT_PADDING)
-
         self.__delete_button = Button(self, text='Delete', command=self.__on_delete_click)
-        self.__delete_button.grid(row=0, column=3, sticky=E, padx=config.ELEMENT_PADDING,
+        self.__delete_button.grid(row=0, column=1, sticky=E, padx=config.ELEMENT_PADDING,
                                   pady=config.ELEMENT_PADDING)
+        try:
+            self.master.subscribe(self)
+        except KeyError:
+            self.destroy()
+            raise
 
     def __on_delete_click(self):
         self.master.remove(self.name)
