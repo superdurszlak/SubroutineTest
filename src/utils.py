@@ -54,3 +54,10 @@ def __is_valid_config_file(config_file):
             return True
         except KeyError or ValueError:
             return False
+
+
+def is_positive_float(v):
+    try:
+        return float(v) > 0.0
+    except:
+        return False

@@ -12,6 +12,9 @@ from src.templates.user_model_template import UserModelTemplate
 
 
 class MaterialEditorHandler(BaseHandler):
+    """
+    Used to handle material properties editor
+    """
     def __init__(self, frame, materials_container):
         self.__materials_container = materials_container
         super(MaterialEditorHandler, self).__init__(frame)

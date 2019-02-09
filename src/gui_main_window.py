@@ -19,8 +19,6 @@ class GuiMainWindow:
         self.master.title('Subroutine Test plugin')
         self.master.iconbitmap(os.path.join(config.RESOURCES_DIR, 'icon.ico'))
         self.master.minsize(config.MIN_WIDTH, config.MIN_HEIGHT)
-        self.__create_basic_controls()
-        self.__load_material_models()
         settings_frame_width = config.MIN_WIDTH / 3
         material_frame_width = config.MIN_WIDTH - settings_frame_width
         bottom_frame_height = 50
@@ -37,14 +35,14 @@ class GuiMainWindow:
         self.controls_frame.grid(row=1, column=0, sticky=E + W, columnspan=2, padx=config.FRAME_PADDING,
                                  pady=config.FRAME_PADDING)
 
-        self.materials_canvas = Canvas(self.materials_frame, width=material_frame_width, bd=0, highlightthickness=0,
-                                       relief='ridge')
+        self.materials_canvas = Canvas(self.materials_frame, width=material_frame_width, height=side_frames_height,
+                                       bd=0, highlightthickness=0, relief='ridge')
         self.materials_canvas.pack(side=LEFT, fill=BOTH, expand=1)
         self.materials_scrollbar = Scrollbar(self.materials_frame, orient='vertical',
                                              command=self.materials_canvas.yview)
         self.materials_scrollbar.pack(side=RIGHT, fill=Y, expand=1)
         self.materials_canvas.config(yscrollcommand=self.materials_scrollbar.set)
-        self.materials_inner_frame = Frame(self.materials_canvas)
+        self.materials_inner_frame = Frame(self.materials_canvas, width=material_frame_width, height=side_frames_height)
         self.materials_inner_frame.pack(fill=BOTH, expand=1)
         self.materials_canvas.create_window((0, 0), window=self.materials_inner_frame, anchor=NW)
 
@@ -64,9 +62,3 @@ class GuiMainWindow:
         Run window main loop
         """
         self.master.mainloop()
-
-    def __create_basic_controls(self):
-        pass
-
-    def __load_material_models(self):
-        pass
