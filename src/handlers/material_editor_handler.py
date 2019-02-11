@@ -34,7 +34,7 @@ class MaterialEditorHandler(BaseHandler):
         self.model_type_combobox.grid(column=0, row=1, sticky=S + W, padx=config.FRAME_PADDING,
                                       pady=config.FRAME_PADDING)
 
-        self.model_variables_frame = Tkinter.LabelFrame(self.frame, text='Model properties',
+        self.model_variables_frame = Tkinter.LabelFrame(self.frame, text='Model-specific material properties',
                                                         borderwidth=config.FRAME_BORDER_WIDTH,
                                                         relief=config.FRAME_RELIEF)
         self.model_variables_frame.grid(column=0, row=2, sticky=W + E + S, padx=config.FRAME_PADDING,
@@ -51,7 +51,7 @@ class MaterialEditorHandler(BaseHandler):
         self.options_frame.grid(column=0, row=3, columnspan=3, sticky=N + W + S, padx=config.FRAME_PADDING,
                                 pady=config.FRAME_PADDING)
 
-        self.model_variable_label = Label(self.options_frame, text='Model name:')
+        self.model_variable_label = Label(self.options_frame, text='Material name:')
         self.model_variable_label.grid(column=0, row=0, sticky=W, padx=config.FRAME_PADDING,
                                        pady=config.FRAME_PADDING)
 
