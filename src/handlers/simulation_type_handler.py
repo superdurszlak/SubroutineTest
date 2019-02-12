@@ -51,6 +51,14 @@ class SimulationTypeHandler(BaseHandler):
         self.__job_name_entry.grid(column=1, row=2, sticky=W, padx=config.ELEMENT_PADDING,
                                    pady=config.ELEMENT_PADDING)
 
+        self.__job_run_label = Label(self.simulation_definition_frame, text='Run automatically')
+        self.__job_run_label.grid(column=0, row=3, sticky=E, padx=config.ELEMENT_PADDING,
+                                  pady=config.ELEMENT_PADDING)
+        self.job_run_variable = BooleanVar()
+        self.__job_run_checkbutton = Checkbutton(self.simulation_definition_frame, variable=self.job_run_variable)
+        self.__job_run_checkbutton.grid(column=1, row=3, sticky=W, padx=config.ELEMENT_PADDING,
+                                        pady=config.ELEMENT_PADDING)
+
         self.simulation_settings_frame = Frame(self.frame)
         self.simulation_settings_frame.grid(column=0, row=1, sticky=W + E + N + S)
 
