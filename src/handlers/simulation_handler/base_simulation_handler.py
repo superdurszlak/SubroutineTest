@@ -32,3 +32,19 @@ class BaseSimulationHandler:
         :return: None
         """
         pass
+
+    @abc.abstractproperty
+    def parameters(self):
+        """
+        Dictionary of parameters relevant for this handler and possibly nested handlers
+        :return: dictionary of parameters
+        """
+        pass
+
+    @abc.abstractproperty
+    def builders(self):
+        """
+        Get all builders relevant for this handler and possibly nested handlers
+        :return: list of builders, with each builder tied to previous one as 'next_builder'
+        """
+        pass

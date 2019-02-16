@@ -1,6 +1,9 @@
 from Tkinter import *
 
 import config
+from src.builders import *
+from src.builders.flat_specimen_sketch_builder import FlatSpecimenSketchBuilder
+from src.builders.standard_explicit_model_builder import StandardExplicitModelBuilder
 from src.handlers.simulation_handler.base_simulation_handler import BaseSimulationHandler
 from src.utils import is_positive_float
 
@@ -24,6 +27,30 @@ class FlatTensile2DTestHandler(BaseSimulationHandler):
         self.tool_displacement = DoubleVar(value=100.0)
         self.duration = DoubleVar(value=1.0)
         self.mesh_edge_length = DoubleVar(value=1.0)
+
+    def parameters(self):
+        self._validate_parameters()
+        return {
+            GRIP_LENGTH: self.grip_section_length.get(),
+            GRIP_WIDTH: self.grip_section_width.get(),
+            TAPER_LENGTH: self.taper_length.get(),
+            REDUCED_WIDTH: self.reduced_section_width.get(),
+            REDUCED_LENGTH: self.reduced_section_length.get(),
+            MESH_EDGE_LENGTH: self.mesh_edge_length.get(),
+            DISPLACEMENT_DURATION: self.duration.get(),
+            GRIP_DISPLACEMENT: self.tool_displacement.get(),
+            SPECIMEN_TEMPERATURE: self.initial_temperature.get()
+        }
+
+    def builders(self):
+        model_builder = StandardExplicitModelBuilder()
+        sketch_builder = FlatSpecimenSketchBuilder()
+        model_builder.next_builder = sketch_builder
+        part_builder = FlatSpecimenPartBuilder()
+        return [
+            model_builder,
+            sketch_builder
+        ]
 
     def _populate(self, frame):
         self.__positive_validator = frame.register(is_positive_float)
@@ -95,13 +122,14 @@ class FlatTensile2DTestHandler(BaseSimulationHandler):
         :param v: entry value
         :return: bool
         """
+        return \
+            is_positive_float(v) and self.__are_parameters_consistent()
+
+    def __are_parameters_consistent(self):
         grip_width = self.grip_section_width.get()
         reduced_section_width = self.reduced_section_width.get()
         taper_length = self.taper_length.get()
-        return \
-            is_positive_float(v) \
-            and grip_width > reduced_section_width \
-            and (grip_width - reduced_section_width) / 2.0 <= taper_length
+        return grip_width > reduced_section_width and (grip_width - reduced_section_width) / 2.0 <= taper_length
 
     @staticmethod
     def __create_entry_line(variable, name, unit, frame, row_index, validator):
@@ -129,3 +157,19 @@ class FlatTensile2DTestHandler(BaseSimulationHandler):
             variable_unit = Label(frame, text=unit)
             variable_unit.grid(column=2, row=row_index, sticky=W, padx=config.ELEMENT_PADDING,
                                pady=config.ELEMENT_PADDING)
+
+    def _validate_parameters(self):
+        positive_values = {
+            GRIP_LENGTH: self.grip_section_length.get(),
+            GRIP_WIDTH: self.grip_section_width.get(),
+            TAPER_LENGTH: self.taper_length.get(),
+            REDUCED_WIDTH: self.reduced_section_width.get(),
+            REDUCED_LENGTH: self.reduced_section_length.get(),
+            MESH_EDGE_LENGTH: self.mesh_edge_length.get(),
+            DISPLACEMENT_DURATION: self.duration.get(),
+            GRIP_DISPLACEMENT: self.tool_displacement.get(),
+            SPECIMEN_TEMPERATURE: self.initial_temperature.get()
+        }
+        for k, v in positive_values.iteritems():
+            if not is_positive_float(v):
+                raise ValueError("Invalid property '%s': must be positive" % k)

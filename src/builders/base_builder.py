@@ -7,11 +7,14 @@ class BaseBuilder:
     def __init__(self):
         self._next_builder = None
         self._required_arguments = []
+        self._provided_arguments = []
+        self._provided_arguments_dict = {}
 
     @property
     def required_arguments(self):
         subsequent_required = self.next_builder.required_arguments if self.next_builder is not None else []
-        return self._required_arguments + subsequent_required
+        not_provided = [arg for arg in subsequent_required if arg not in self._provided_arguments]
+        return self._required_arguments + not_provided
 
     @property
     def next_builder(self):
@@ -36,10 +39,11 @@ class BaseBuilder:
         :param kwargs: keyword arguments. These may be specific to both current builder or its subsequent builders.
         :return: None
         """
-        self._build(**kwargs)
         missing_arguments = [arg for arg in self.required_arguments if arg not in kwargs.keys()]
         if len(missing_arguments) > 0:
             raise KeyError("Missing required arguments: %s" % missing_arguments)
+        self._build(**kwargs)
+        kwargs = dict(kwargs, **self._provided_arguments_dict)
         if self.next_builder is not None:
             self.next_builder.build(**kwargs)
 

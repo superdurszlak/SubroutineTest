@@ -24,4 +24,9 @@ ROOT_DIR = os.path.dirname(os.path.realpath(__file__))
 MODEL_DIR = os.path.join(ROOT_DIR, 'models')
 RESOURCES_DIR = os.path.join(ROOT_DIR, 'resources')
 
+ABSOLUTE_ZERO = 0.0
+STEFAN_BOLTZMANN = 5.670367e-8
+MESH_DEVIATION_FACTOR = 0.05
+MESH_MIN_SIZE_FACTOR = 0.1
+
 VERSION = '0.1'

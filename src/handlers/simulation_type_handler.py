@@ -4,6 +4,7 @@ from ttk import Combobox
 import config
 from src.handlers.base_handler import BaseHandler
 from src.handlers.simulation_handler.flat_tensile_2d_test_handler import FlatTensile2DTestHandler
+from src.builders import *
 
 
 class SimulationTypeHandler(BaseHandler):
@@ -16,6 +17,17 @@ class SimulationTypeHandler(BaseHandler):
             'Flat tensile test, 2D': FlatTensile2DTestHandler(),
         }
         super(SimulationTypeHandler, self).__init__(frame)
+
+    @property
+    def parameters(self):
+        choice = self.__simulation_type_variable.get()
+        handler = self.__simulation_types_map[choice]
+        parameters = {
+            MODEL_NAME: self.model_name_variable.get(),
+            JOB_NAME: self.job_name_variable.get(),
+            RUN_JOB_AUTOMATICALLY: self.job_run_variable.get(),
+        }
+        return dict(handler.parameters, **parameters)
 
     def _configure(self):
         self.simulation_definition_frame = LabelFrame(self.frame, text='Simulation definition',
