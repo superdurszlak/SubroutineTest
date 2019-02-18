@@ -2,8 +2,10 @@ from Tkinter import *
 
 import config
 from src.builders import *
+from src.builders.flat_specimen_part_builder import FlatSpecimenPartBuilder
 from src.builders.flat_specimen_sketch_builder import FlatSpecimenSketchBuilder
 from src.builders.standard_explicit_model_builder import StandardExplicitModelBuilder
+from src.builders.user_material_builder import UserMaterialBuilder
 from src.handlers.simulation_handler.base_simulation_handler import BaseSimulationHandler
 from src.utils import is_positive_float
 
@@ -28,28 +30,38 @@ class FlatTensile2DTestHandler(BaseSimulationHandler):
         self.duration = DoubleVar(value=1.0)
         self.mesh_edge_length = DoubleVar(value=1.0)
 
+    @property
     def parameters(self):
         self._validate_parameters()
+        # Millimeters need to be converted back to meters
+        conversion_factor = 1e-3
         return {
-            GRIP_LENGTH: self.grip_section_length.get(),
-            GRIP_WIDTH: self.grip_section_width.get(),
-            TAPER_LENGTH: self.taper_length.get(),
-            REDUCED_WIDTH: self.reduced_section_width.get(),
-            REDUCED_LENGTH: self.reduced_section_length.get(),
-            MESH_EDGE_LENGTH: self.mesh_edge_length.get(),
+            GRIP_LENGTH: self.grip_section_length.get() * conversion_factor,
+            GRIP_WIDTH: self.grip_section_width.get() * conversion_factor,
+            TAPER_LENGTH: self.taper_length.get() * conversion_factor,
+            REDUCED_WIDTH: self.reduced_section_width.get() * conversion_factor,
+            REDUCED_LENGTH: self.reduced_section_length.get() * conversion_factor,
+            MESH_EDGE_LENGTH: self.mesh_edge_length.get() * conversion_factor,
             DISPLACEMENT_DURATION: self.duration.get(),
-            GRIP_DISPLACEMENT: self.tool_displacement.get(),
+            GRIP_DISPLACEMENT: self.tool_displacement.get() * conversion_factor,
             SPECIMEN_TEMPERATURE: self.initial_temperature.get()
         }
 
+    @property
     def builders(self):
         model_builder = StandardExplicitModelBuilder()
         sketch_builder = FlatSpecimenSketchBuilder()
-        model_builder.next_builder = sketch_builder
+        material_builder = UserMaterialBuilder()
         part_builder = FlatSpecimenPartBuilder()
+
+        model_builder.next_builder = sketch_builder
+        sketch_builder.next_builder = material_builder
+        material_builder.next_builder = part_builder
         return [
             model_builder,
-            sketch_builder
+            sketch_builder,
+            material_builder,
+            part_builder
         ]
 
     def _populate(self, frame):

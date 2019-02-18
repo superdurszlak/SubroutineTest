@@ -1,4 +1,5 @@
-import mdb
+from abaqus import *
+from abaqusConstants import *
 
 from src.builders import *
 from src.builders.base_builder import BaseBuilder
@@ -20,17 +21,20 @@ class FlatSpecimenSketchBuilder(BaseBuilder):
         ]
 
     def _build(self, **kwargs):
+        model_name = kwargs[MODEL_NAME]
         grip_length = kwargs[GRIP_LENGTH]
         grip_width = kwargs[GRIP_WIDTH]
         reduced_length = kwargs[REDUCED_LENGTH]
         reduced_width = kwargs[REDUCED_WIDTH]
         taper_length = kwargs[TAPER_LENGTH]
         sketch_name = 'Specimen_Sketch'
-        self.__create_sketch(grip_length, grip_width, taper_length, reduced_length, reduced_width, sketch_name)
+        self.__create_sketch(model_name, grip_length, grip_width, taper_length, reduced_length, reduced_width,
+                             sketch_name)
         self._provided_arguments_dict[SKETCH_NAME] = sketch_name
 
-    def __create_sketch(self, grip_length, grip_width, taper_length, reduced_length, reduced_width, sketch_name):
-        sketch = mdb.models[MODEL_NAME].ConstrainedSketch(name=sketch_name, sheetSize=200.0)
+    def __create_sketch(self, model_name, grip_length, grip_width, taper_length, reduced_length, reduced_width,
+                        sketch_name):
+        sketch = mdb.models[model_name].ConstrainedSketch(name=sketch_name, sheetSize=0.2)
         self.__create_lines(sketch)
         self.__create_symmetry_constrains(sketch)
         self.__create_dimensions(sketch, grip_length, grip_width, taper_length, reduced_length,
@@ -43,30 +47,30 @@ class FlatSpecimenSketchBuilder(BaseBuilder):
         sketch.HorizontalConstraint(entity=geometry[2], addUndoState=False)
         sketch.ConstructionLine(point1=(0.0, 0.0), angle=90.0)
         sketch.VerticalConstraint(entity=geometry[3], addUndoState=False)
-        sketch.Line(point1=(-10.0, 20.0), point2=(-10.0, 30.0))
+        sketch.Line(point1=(-1e-2, 2e-2), point2=(-1e-2, 3e-2))
         sketch.VerticalConstraint(entity=geometry[4], addUndoState=False)
-        sketch.Line(point1=(-10.0, 30.0), point2=(10.0, 30.0))
+        sketch.Line(point1=(-1e-2, 3e-2), point2=(1e-2, 3e-2))
         sketch.HorizontalConstraint(entity=geometry[5], addUndoState=False)
         sketch.PerpendicularConstraint(entity1=geometry[4], entity2=geometry[5], addUndoState=False)
-        sketch.Line(point1=(10.0, 30.0), point2=(10.0, 20.0))
+        sketch.Line(point1=(1e-2, 3e-2), point2=(1e-2, 2e-2))
         sketch.VerticalConstraint(entity=geometry[6], addUndoState=False)
         sketch.PerpendicularConstraint(entity1=geometry[5], entity2=geometry[6], addUndoState=False)
-        sketch.Line(point1=(-10.0, -20.0), point2=(-10.0, -30.0))
+        sketch.Line(point1=(-1e-2, -2e-2), point2=(-1e-2, -3e-2))
         sketch.VerticalConstraint(entity=geometry[7], addUndoState=False)
-        sketch.Line(point1=(-10.0, -30.0), point2=(10.0, -30.0))
+        sketch.Line(point1=(-1e-2, -3e-2), point2=(1e-2, -3e-2))
         sketch.HorizontalConstraint(entity=geometry[8], addUndoState=False)
         sketch.PerpendicularConstraint(entity1=geometry[7], entity2=geometry[8], addUndoState=False)
-        sketch.Line(point1=(10.0, -30.0), point2=(10.0, -20.0))
+        sketch.Line(point1=(1e-2, -3e-2), point2=(1e-2, -2e-2))
         sketch.VerticalConstraint(entity=geometry[9], addUndoState=False)
         sketch.PerpendicularConstraint(entity1=geometry[8], entity2=geometry[9], addUndoState=False)
-        sketch.Line(point1=(-5.0, 10.0), point2=(-5.0, -10.0))
+        sketch.Line(point1=(-5e-3, 1e-2), point2=(-5e-3, -1e-2))
         sketch.VerticalConstraint(entity=geometry[10], addUndoState=False)
-        sketch.Line(point1=(5.0, 10.0), point2=(5.0, -10.0))
+        sketch.Line(point1=(5e-3, 1e-2), point2=(5e-3, -1e-2))
         sketch.VerticalConstraint(entity=geometry[11], addUndoState=False)
-        sketch.ArcByStartEndTangent(point1=(-5.0, -10.0), point2=(-10.0, -20.0), entity=geometry[10])
-        sketch.ArcByStartEndTangent(point1=(5.0, -10.0), point2=(10.0, -20.0), entity=geometry[11])
-        sketch.ArcByStartEndTangent(point1=(5.0, 10.0), point2=(10.0, 20.0), entity=geometry[11])
-        sketch.ArcByStartEndTangent(point1=(-5.0, 10.0), point2=(-10.0, 20.0), entity=geometry[10])
+        sketch.ArcByStartEndTangent(point1=(-5e-3, -1e-2), point2=(-1e-2, -2e-2), entity=geometry[10])
+        sketch.ArcByStartEndTangent(point1=(5e-3, -1e-2), point2=(1e-2, -2e-2), entity=geometry[11])
+        sketch.ArcByStartEndTangent(point1=(5e-3, 1e-2), point2=(1e-2, 2e-2), entity=geometry[11])
+        sketch.ArcByStartEndTangent(point1=(-5e-3, 1e-2), point2=(-1e-2, 2e-2), entity=geometry[10])
 
     @staticmethod
     def __create_symmetry_constrains(sketch):
@@ -92,8 +96,11 @@ class FlatSpecimenSketchBuilder(BaseBuilder):
     @staticmethod
     def __create_dimensions(sketch, grip_length, grip_width, taper_length, reduced_length, reduced_width):
         vertices = sketch.vertices
-        sketch.VerticalDimension(vertex1=vertices[3], vertex2=vertices[2], textPoint=(15, 30), value=grip_length)
-        sketch.HorizontalDimension(vertex1=vertices[1], vertex2=vertices[2], textPoint=(5, 35), value=grip_width)
-        sketch.VerticalDimension(vertex1=vertices[10], vertex2=vertices[11], textPoint=(15, 5), value=reduced_length)
-        sketch.HorizontalDimension(vertex1=vertices[10], vertex2=vertices[8], textPoint=(0.0, 15), value=reduced_width)
-        sketch.VerticalDimension(vertex1=vertices[10], vertex2=vertices[3], textPoint=(15, 15), value=taper_length)
+        sketch.VerticalDimension(vertex1=vertices[3], vertex2=vertices[2], textPoint=(1.5e-2, 3e-2), value=grip_length)
+        sketch.HorizontalDimension(vertex1=vertices[1], vertex2=vertices[2], textPoint=(5e-3, 3.5e-2), value=grip_width)
+        sketch.VerticalDimension(vertex1=vertices[10], vertex2=vertices[11], textPoint=(1.5e-2, 5e-3),
+                                 value=reduced_length)
+        sketch.HorizontalDimension(vertex1=vertices[10], vertex2=vertices[8], textPoint=(0.0, 1.5e-2),
+                                   value=reduced_width)
+        sketch.VerticalDimension(vertex1=vertices[10], vertex2=vertices[2], textPoint=(1.5e-2, 1.5e-2),
+                                 value=grip_length + taper_length)

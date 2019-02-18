@@ -23,7 +23,7 @@ class BaseBuilder:
 
         :return: Next builder
         """
-        return self.next_builder
+        return self._next_builder
 
     @next_builder.setter
     def next_builder(self, builder):

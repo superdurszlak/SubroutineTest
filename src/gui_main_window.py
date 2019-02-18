@@ -21,7 +21,6 @@ class GuiMainWindow:
         self.master.minsize(config.MIN_WIDTH, config.MIN_HEIGHT)
         settings_frame_width = config.MIN_WIDTH / 3
         material_frame_width = config.MIN_WIDTH - settings_frame_width
-        bottom_frame_height = 50
         side_frames_height = config.MIN_HEIGHT
         self.simulation_type_frame = LabelFrame(self.master, text='Simulation settings', width=settings_frame_width,
                                                 height=side_frames_height, borderwidth=config.FRAME_BORDER_WIDTH,
@@ -30,10 +29,6 @@ class GuiMainWindow:
                                         sticky=N + W + S + E)
         self.materials_frame = Frame(self.master, width=material_frame_width, height=side_frames_height)
         self.materials_frame.grid(row=0, column=1, sticky=N + W + S + E)
-        self.controls_frame = Frame(self.master, height=bottom_frame_height, borderwidth=config.FRAME_BORDER_WIDTH,
-                                    relief=config.FRAME_RELIEF)
-        self.controls_frame.grid(row=1, column=0, sticky=E + W, columnspan=2, padx=config.FRAME_PADDING,
-                                 pady=config.FRAME_PADDING)
 
         self.materials_canvas = Canvas(self.materials_frame, width=material_frame_width, height=side_frames_height,
                                        bd=0, highlightthickness=0, relief='ridge')
@@ -56,6 +51,7 @@ class GuiMainWindow:
 
         self.materials_handler = MaterialsHandler(self.materials_inner_frame)
         self.simulation_type_handler = SimulationTypeHandler(self.simulation_type_frame)
+        self.simulation_type_handler.material_templates_list = self.materials_handler.materials_list_frame
 
     def run(self):
         """

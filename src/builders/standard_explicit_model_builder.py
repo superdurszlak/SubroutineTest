@@ -1,4 +1,3 @@
-import mdb
 from abaqus import *
 from abaqusConstants import *
 

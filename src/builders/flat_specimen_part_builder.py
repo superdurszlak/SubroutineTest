@@ -1,4 +1,5 @@
-import mdb
+from abaqus import *
+from abaqusConstants import *
 import mesh
 
 import config
@@ -43,8 +44,12 @@ class FlatSpecimenPartBuilder(BaseBuilder):
     @staticmethod
     def __create_shell_from_sketch(model_name, sketch_name, part_name):
         sketch = mdb.models[model_name].sketches[sketch_name]
+        temporary_sketch = mdb.models[model_name].ConstrainedSketch(name='__profile__', sheetSize=0.2)
+        temporary_sketch.sketchOptions.setValues(gridOrigin=(0.0, 0.0))
+        temporary_sketch.retrieveSketch(sketch=sketch)
         part = mdb.models[model_name].Part(name=part_name, dimensionality=TWO_D_PLANAR, type=DEFORMABLE_BODY)
-        part.BaseShell(sketch=sketch)
+        part.BaseShell(sketch=temporary_sketch)
+        del mdb.models[model_name].sketches['__profile__']
 
     @staticmethod
     def __create_partitions(model_name, part_name):
