@@ -2,9 +2,14 @@ from Tkinter import *
 
 import config
 from src.builders import *
+from src.builders.assembly_builder import AssemblyBuilder
+from src.builders.border_conditions_builder import BorderConditionsBuilder
 from src.builders.flat_specimen_part_builder import FlatSpecimenPartBuilder
 from src.builders.flat_specimen_sketch_builder import FlatSpecimenSketchBuilder
+from src.builders.job_builder import JobBuilder
 from src.builders.standard_explicit_model_builder import StandardExplicitModelBuilder
+from src.builders.step_builder import StepBuilder
+from src.builders.temperature_field_builder import TemperatureFieldBuilder
 from src.builders.user_material_builder import UserMaterialBuilder
 from src.handlers.simulation_handler.base_simulation_handler import BaseSimulationHandler
 from src.utils import is_positive_float
@@ -53,15 +58,29 @@ class FlatTensile2DTestHandler(BaseSimulationHandler):
         sketch_builder = FlatSpecimenSketchBuilder()
         material_builder = UserMaterialBuilder()
         part_builder = FlatSpecimenPartBuilder()
+        assembly_builder = AssemblyBuilder()
+        step_builder = StepBuilder()
+        bc_builder = BorderConditionsBuilder()
+        initial_field_builder = TemperatureFieldBuilder()
+        job_buidler = JobBuilder()
 
         model_builder.next_builder = sketch_builder
         sketch_builder.next_builder = material_builder
         material_builder.next_builder = part_builder
+        part_builder.next_builder = assembly_builder
+        assembly_builder.next_builder = step_builder
+        step_builder.next_builder = bc_builder
+        bc_builder.next_builder = initial_field_builder
+        initial_field_builder.next_builder = job_buidler
         return [
             model_builder,
             sketch_builder,
             material_builder,
-            part_builder
+            part_builder,
+            assembly_builder,
+            step_builder,
+            bc_builder,
+            initial_field_builder
         ]
 
     def _populate(self, frame):

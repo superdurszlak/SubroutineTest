@@ -1,4 +1,6 @@
+import os
 from Tkinter import *
+from multiprocessing import cpu_count
 from ttk import Combobox
 
 import config
@@ -37,12 +39,16 @@ class SimulationTypeHandler(BaseHandler):
         handler = self.__simulation_types_map[choice]
         material_name = handler.material_name.get()
         material_template = self.__material_templates_list.find(material_name)
+        cpu_num = self.cpu_count_variable.get()
+        max_cpu = cpu_count()
+        cpu_num = min(max(cpu_num, 1), max_cpu)
         parameters = {
             MODEL_NAME: self.model_name_variable.get(),
             JOB_NAME: self.job_name_variable.get(),
             RUN_JOB_AUTOMATICALLY: self.job_run_variable.get(),
             MATERIAL_NAME: material_name,
-            MATERIAL_TEMPLATE: material_template
+            MATERIAL_TEMPLATE: material_template,
+            CPU_COUNT: cpu_num
         }
         return dict(handler.parameters, **parameters)
 
@@ -93,14 +99,17 @@ class SimulationTypeHandler(BaseHandler):
         self.__job_run_label = Label(self.simulation_definition_frame, text='Run automatically')
         self.__job_run_label.grid(column=0, row=3, sticky=E, padx=config.ELEMENT_PADDING,
                                   pady=config.ELEMENT_PADDING)
+
+        self.cpu_count_variable = IntVar()
+
         self.job_run_variable = BooleanVar()
         self.__job_run_checkbutton = Checkbutton(self.simulation_definition_frame, variable=self.job_run_variable)
-        self.__job_run_checkbutton.grid(column=1, row=3, sticky=W, padx=config.ELEMENT_PADDING,
+        self.__job_run_checkbutton.grid(column=1, row=4, sticky=W, padx=config.ELEMENT_PADDING,
                                         pady=config.ELEMENT_PADDING)
 
         self.create_model_button = Button(self.simulation_definition_frame, text='Create model',
                                           command=self.__on_create_model)
-        self.create_model_button.grid(column=1, row=4, sticky=W, padx=config.ELEMENT_PADDING,
+        self.create_model_button.grid(column=1, row=5, sticky=W, padx=config.ELEMENT_PADDING,
                                       pady=config.ELEMENT_PADDING)
 
         self.simulation_settings_frame = Frame(self.frame)
