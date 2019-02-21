@@ -1,4 +1,3 @@
-import os
 from Tkinter import *
 from multiprocessing import cpu_count
 from ttk import Combobox
@@ -95,13 +94,17 @@ class SimulationTypeHandler(BaseHandler):
         self.__job_name_entry = Entry(self.simulation_definition_frame, textvariable=self.job_name_variable)
         self.__job_name_entry.grid(column=1, row=2, sticky=W, padx=config.ELEMENT_PADDING,
                                    pady=config.ELEMENT_PADDING)
+        self.__cpu_count_label = Label(self.simulation_definition_frame, text='Number of CPUs')
+        self.__cpu_count_label.grid(column=0, row=3, sticky=E, padx=config.ELEMENT_PADDING,
+                                    pady=config.ELEMENT_PADDING)
+        self.cpu_count_variable = IntVar(value=1)
+        self.__job_name_entry = Entry(self.simulation_definition_frame, textvariable=self.cpu_count_variable)
+        self.__job_name_entry.grid(column=1, row=3, sticky=W, padx=config.ELEMENT_PADDING,
+                                   pady=config.ELEMENT_PADDING)
 
         self.__job_run_label = Label(self.simulation_definition_frame, text='Run automatically')
-        self.__job_run_label.grid(column=0, row=3, sticky=E, padx=config.ELEMENT_PADDING,
+        self.__job_run_label.grid(column=0, row=4, sticky=E, padx=config.ELEMENT_PADDING,
                                   pady=config.ELEMENT_PADDING)
-
-        self.cpu_count_variable = IntVar()
-
         self.job_run_variable = BooleanVar()
         self.__job_run_checkbutton = Checkbutton(self.simulation_definition_frame, variable=self.job_run_variable)
         self.__job_run_checkbutton.grid(column=1, row=4, sticky=W, padx=config.ELEMENT_PADDING,

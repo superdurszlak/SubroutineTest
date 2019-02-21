@@ -17,8 +17,8 @@ class JobBuilder(BaseBuilder):
         ]
 
     def _build(self, **kwargs):
-        model_name = kwargs[MODEL_NAME],
-        job_name = kwargs[JOB_NAME],
+        model_name = kwargs[MODEL_NAME]
+        job_name = kwargs[JOB_NAME]
         auto_run = kwargs[RUN_JOB_AUTOMATICALLY]
         cpu_count = kwargs[CPU_COUNT]
         subroutine_path = kwargs[USER_SUBROUTINE]
@@ -40,4 +40,4 @@ class JobBuilder(BaseBuilder):
                 explicitPrecision=SINGLE, nodalOutputPrecision=SINGLE, echoPrint=OFF,
                 modelPrint=OFF, contactPrint=OFF, historyPrint=OFF,
                 userSubroutine=subroutine_path, scratch='',
-                resultsFormat=ODB, multiprocessingMode=DEFAULT, numCpus=cpu_count, numGPUs=0)
+                resultsFormat=ODB, multiprocessingMode=DEFAULT, numCpus=cpu_count, numGPUs=0, numDomains=cpu_count)

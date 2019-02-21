@@ -20,7 +20,7 @@ class TemperatureFieldBuilder(BaseBuilder):
 
     def _build(self, **kwargs):
         model_name = kwargs[MODEL_NAME]
-        full_volume_set = kwargs[FULL_VOLUME_SET],
+        full_volume_set = kwargs[FULL_VOLUME_SET]
         specimen_temperature = kwargs[SPECIMEN_TEMPERATURE]
         assembly_name = kwargs[ASSEMBLY_NAME]
         initial_temperature_field = 'Initial_Temperature_Field'

@@ -1,6 +1,8 @@
+import os
 from Tkinter import *
 
 import config
+from src.templates.material_tooltip import MaterialTooltip
 
 
 class UserModelTemplate(Frame):
@@ -8,7 +10,7 @@ class UserModelTemplate(Frame):
         Frame.__init__(self, master, borderwidth=config.FRAME_BORDER_WIDTH, relief=config.FRAME_RELIEF,
                        width=master.winfo_width() - 2 * config.FRAME_PADDING, **kw)
         self.name = name
-
+        self.vuhard_path = constitutive_model.vuhard_path
         self.density = basic_model.density_variable.get()
         self.elastic_modulus = basic_model.elastic_variable.get()
         self.poisson_ratio = basic_model.poisson_ratio_variable.get()
@@ -32,6 +34,8 @@ class UserModelTemplate(Frame):
         self.__material_name_label.grid(row=0, column=0, sticky=W, padx=config.ELEMENT_PADDING,
                                         pady=config.ELEMENT_PADDING)
 
+        self.__tooltip = MaterialTooltip(self.__material_name_label, self.__make_text(constitutive_model))
+
         self.__delete_button = Button(self, text='Delete', command=self.__on_delete_click)
         self.__delete_button.grid(row=0, column=1, sticky=E, padx=config.ELEMENT_PADDING,
                                   pady=config.ELEMENT_PADDING)
@@ -43,3 +47,17 @@ class UserModelTemplate(Frame):
 
     def __on_delete_click(self):
         self.master.remove(self.name)
+
+    def __make_text(self, constitutive_model):
+        variables = constitutive_model.variables
+        pairs = [
+                    ('Density', self.density),
+                    ('Elastic modulus', self.elastic_modulus),
+                    ('Poisson\'s ratio', self.poisson_ratio),
+                    ('Thermal conductivity', self.thermal_conductivity),
+                    ('Heat capacity', self.heat_capacity),
+                    ('Inelastic heat fraction', self.inelastic_heat_fraction)
+                ] + [
+                    (v[config.KEY_VARIABLE_NAME], v[config.KEY_HOLDER].get()) for v in variables
+                ]
+        return "\n".join("%s=%f" % v for v in pairs)

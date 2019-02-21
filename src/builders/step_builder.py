@@ -22,7 +22,7 @@ class StepBuilder(BaseBuilder):
         step_name = 'Tension_step'
         step_initial = displacement_duration * 1e-3
         step_minimum = step_initial * 1e-5
-        max_num_inc = 1e8
+        max_num_inc = 10**8
         max_delta_t = 1e-1
         mdb.models[model_name].CoupledTempDisplacementStep(name=step_name, previous=INITIAL_STEP,
                                                            timePeriod=displacement_duration, maxNumInc=max_num_inc,

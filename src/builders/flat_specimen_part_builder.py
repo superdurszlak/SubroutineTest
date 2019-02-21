@@ -1,6 +1,6 @@
+import mesh
 from abaqus import *
 from abaqusConstants import *
-import mesh
 
 import config
 from src.builders import *
@@ -31,15 +31,21 @@ class FlatSpecimenPartBuilder(BaseBuilder):
         model_name = kwargs[MODEL_NAME]
         part_name = 'Specimen_Flat_2D'
         section_name = 'Specimen_Flat_2D_section'
-        self.__create_part(sketch_name, mesh_edge_length, material_name, model_name, part_name, section_name)
-        self._provided_arguments_dict[SKETCH_NAME] = sketch_name
-
-    def __create_part(self, sketch_name, mesh_edge_length, material_name, model_name, part_name, section_name):
+        full_volume_set = 'Full_%s' % part_name
+        fixed_grip_set = 'Fixed_%s' % part_name
+        movable_grip_set = 'Movable_%s' % part_name
         self.__create_shell_from_sketch(model_name, sketch_name, part_name)
         self.__create_partitions(model_name, part_name)
-        self.__create_sets(model_name, part_name)
-        self.__create_material_assignment(model_name, part_name, section_name, material_name)
+        self.__create_sets(model_name, part_name, full_volume_set, fixed_grip_set, movable_grip_set)
+        self.__create_material_assignment(model_name, part_name, section_name, material_name, full_volume_set)
         self.__create_mesh(model_name, part_name, mesh_edge_length)
+        self._provided_arguments_dict = {
+            PART_NAME: part_name,
+            SECTION_NAME: section_name,
+            FULL_VOLUME_SET: full_volume_set,
+            FIXED_GRIP_SET: fixed_grip_set,
+            MOVABLE_GRIP_SET: movable_grip_set
+        }
 
     @staticmethod
     def __create_shell_from_sketch(model_name, sketch_name, part_name):
@@ -65,23 +71,23 @@ class FlatSpecimenPartBuilder(BaseBuilder):
         part.PartitionFaceByShortestPath(point1=vertices[6], point2=vertices[9], faces=picked_faces)
 
     @staticmethod
-    def __create_sets(model_name, part_name):
+    def __create_sets(model_name, part_name, full_volume_set, fixed_grip_set, movable_grip_set):
         part = mdb.models[model_name].parts[part_name]
         faces = part.faces.getSequenceFromMask(mask=('[#7 ]',), )
-        part.Set(faces=faces, name=FULL_VOLUME_SET)
+        part.Set(faces=faces, name=full_volume_set)
         part = mdb.models[model_name].parts[part_name]
         faces = part.faces.getSequenceFromMask(mask=('[#4 ]',), )
-        part.Set(faces=faces, name=FIXED_GRIP_SET)
+        part.Set(faces=faces, name=fixed_grip_set)
         part = mdb.models[model_name].parts[part_name]
         faces = part.faces.getSequenceFromMask(mask=('[#2 ]',), )
-        part.Set(faces=faces, name=MOVABLE_GRIP_SET)
+        part.Set(faces=faces, name=movable_grip_set)
 
     @staticmethod
-    def __create_material_assignment(model_name, part_name, section_name, material_name):
+    def __create_material_assignment(model_name, part_name, section_name, material_name, full_volume_set):
         mdb.models[model_name].HomogeneousSolidSection(name=section_name,
                                                        material=material_name, thickness=None)
         part = mdb.models[model_name].parts[part_name]
-        region = part.sets[FULL_VOLUME_SET]
+        region = part.sets[full_volume_set]
         part.SectionAssignment(region=region, sectionName=section_name, offset=0.0,
                                offsetType=MIDDLE_SURFACE, offsetField='',
                                thicknessAssignment=FROM_SECTION)
