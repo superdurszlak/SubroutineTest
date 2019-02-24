@@ -10,7 +10,7 @@ class UserModelTemplate(Frame):
         Frame.__init__(self, master, borderwidth=config.FRAME_BORDER_WIDTH, relief=config.FRAME_RELIEF,
                        width=master.winfo_width() - 2 * config.FRAME_PADDING, **kw)
         self.name = name
-        self.vuhard_path = constitutive_model.vuhard_path
+        self.subroutine_path = constitutive_model.subroutine_path
         self.density = basic_model.density_variable.get()
         self.elastic_modulus = basic_model.elastic_variable.get()
         self.poisson_ratio = basic_model.poisson_ratio_variable.get()

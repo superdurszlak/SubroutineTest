@@ -9,7 +9,8 @@ FRAME_BORDER_WIDTH = 2
 FRAME_RELIEF = 'groove'
 
 CONFIG_FILE = 'config.json'
-VUHARD_FILE = 'VUHARD.for'
+SUBROUTINE_FILE = 'subroutine.for'
+PARAM_FILE = 'aba_param_sp.inc'
 
 KEY_MODEL_NAME = u'name'
 KEY_VARIABLE_NAME = u'name'

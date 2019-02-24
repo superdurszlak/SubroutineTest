@@ -38,7 +38,7 @@ class UserMaterialBuilder(BaseBuilder):
         mdb.models[model_name].materials[material_name].InelasticHeatFraction(fraction=inelastic_heat_fraction)
         mdb.models[model_name].materials[material_name].SpecificHeat(table=((heat_capacity, ), ))
         self._provided_arguments_dict = {
-            USER_SUBROUTINE: material_template.vuhard_path
+            USER_SUBROUTINE: material_template.subroutine_path
         }
 
 

@@ -8,23 +8,27 @@ def is_valid_model_dir(directory):
     """
     Checks if given directory has valid file contents
 
-    The directory is expected to contain config.json file with models configuration for GUI, and VUHARD.for with FORTRAN
-    source code of VUHARD subroutine.
+    The directory is expected to contain config.json file with models configuration for GUI, SUROUTINE.for with
+    FORTRAN source code of appropriate (namely UHARD/VUHARD) subroutine and aba_param_sp.inc file which is necessary
+    for Abaqus subroutines to work properly.
 
     @:param directory: full path to directory that has to be checked
 
     :returns True if directory is valid, False otherwise
     """
     config_file = os.path.join(directory, config.CONFIG_FILE)
-    vuhard_file = os.path.join(directory, config.VUHARD_FILE)
+    subroutine_file = os.path.join(directory, config.SUBROUTINE_FILE)
+    param_file = os.path.join(directory, config.PARAM_FILE)
     if not os.path.exists(directory):
         os.mkdir(directory)
     return \
         os.path.exists(config_file) \
         and os.path.isfile(config_file) \
         and __is_valid_config_file(config_file) \
-        and os.path.exists(vuhard_file) \
-        and os.path.isfile(vuhard_file)
+        and os.path.exists(subroutine_file) \
+        and os.path.isfile(subroutine_file) \
+        and os.path.exists(param_file) \
+        and os.path.isfile(param_file)
 
 
 def __is_valid_config_file(config_file):

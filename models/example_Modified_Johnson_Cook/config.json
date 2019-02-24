@@ -1,0 +1,65 @@
+{
+  "name": "Modified Johnson-Cook",
+  "variables": [
+    {
+      "identifier": 0,
+      "name": "A",
+      "unit": "Pa",
+      "description": "Base yield strength"
+    },
+    {
+      "identifier": 1,
+      "name": "n1",
+      "unit": "-",
+      "description": "Work hardening exponent"
+    },
+    {
+      "identifier": 2,
+      "name": "b1",
+      "unit": "-",
+      "description": "Strain rate dependent hardening coefficient - constant"
+    },
+    {
+      "identifier": 3,
+      "name": "b2",
+      "unit": "-",
+      "description": "Strain rate dependent hardening coefficient - 1st order"
+    },
+    {
+      "identifier": 4,
+      "name": "b3",
+      "unit": "-",
+      "description": "Strain rate dependent hardening coefficient - 2nd order"
+    },
+    {
+      "identifier": 5,
+      "name": "L1",
+      "unit": "-",
+      "description": "Constant thermal softening parameter"
+    },
+    {
+      "identifier": 6,
+      "name": "L2",
+      "unit": "-",
+      "description": "Strain dependent thermal softening parameter"
+    },
+    {
+      "identifier": 7,
+      "name": "E*0",
+      "unit": "1/s",
+      "description": "Reference strain rate"
+    },
+    {
+      "identifier": 8,
+      "name": "T0",
+      "unit": "K",
+      "description": "Reference temperature"
+    },
+    {
+      "identifier": 9,
+      "name": "Tm",
+      "unit": "K",
+      "description": "Melting point"
+    }
+  ]
+}

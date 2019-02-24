@@ -1,6 +1,6 @@
 # SubroutineTest
 
-SubroitineTest is Abaqus 6.14 plugin intended for user-defined constitutive model assessment automation. As such, its planned purpose is to allow to pre-configure and autogenerate simple dynamic/explicit models for user-defined VUHARD subroutines.
+SubroutineTest is Abaqus 6.14 plugin intended for user-defined constitutive model assessment automation. As such, its planned purpose is to allow to pre-configure and autogenerate simple dynamic/explicit models for user-defined UHARD/VUHARD subroutines.
 
 ## Formalities
 
