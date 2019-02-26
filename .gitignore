@@ -151,12 +151,3 @@ venv.bak/
 *.exe
 *.out
 *.app
-
-# Project-specific stuff
-models/
-!models/example_Johnson_Cook/subroutine.for
-!models/example_Johnson_Cook/config.json
-!models/example_Johnson_Cook/aba_param_sp.inc
-!models/example_Modified_Johnson_Cook/subroutine.for
-!models/example_Modified_Johnson_Cook/config.json
-!models/example_Modified_Johnson_Cook/aba_param_sp.inc
