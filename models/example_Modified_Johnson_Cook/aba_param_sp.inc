@@ -1,1 +1,0 @@
-      parameter (nprecd=1)

@@ -9,7 +9,7 @@ def is_valid_model_dir(directory):
     Checks if given directory has valid file contents
 
     The directory is expected to contain config.json file with models configuration for GUI, SUROUTINE.for with
-    FORTRAN source code of appropriate (namely UHARD/VUHARD) subroutine and aba_param_sp.inc file which is necessary
+    FORTRAN source code of appropriate (namely UHARD/VUHARD) subroutine and aba_param_dp.inc file which is necessary
     for Abaqus subroutines to work properly.
 
     @:param directory: full path to directory that has to be checked
