@@ -23,23 +23,23 @@ C
 
       Sp = (A + B*(e ** n)) *
      1  (1 + C*log(edotn)) *
-     2  ((1 - Th)**m)
+     2  (1 - Th**m)
       HARD(1) = B*n*(e ** (n - 1)) *
      1  (1 + C*log(edotn)) *
-     2  ((1 - Th)**m)
+     2  (1 - Th**m)
       HARD(2) = (A + B*(e ** n)) *
      1  (C/edot) *
-     2  ((1 - Th)**m)
+     2  (1 - Th**m)
       HARD(3) = (A + B*(e ** n)) *
      1  (1 + C*log(edotn)) *
-     2  (m * (((T - Tm)**(m - 1))/((Tr - Tm)**m)))
+     2  (m * (Th ** m) / (Tr - T))
 
       Spmin = 1.0d0
       if (Sp.LE.Spmin) then
         Sp = Spmin
-        HARD(1) = 0.0d0
-        HARD(2) = 0.0d0
-        HARD(3) = 0.0d0
+        HARD(1) = HARD(1)/1000
+        HARD(2) = HARD(2)/1000
+        HARD(3) = HARD(3)/1000
       end if
       SYIELD = Sp
 
