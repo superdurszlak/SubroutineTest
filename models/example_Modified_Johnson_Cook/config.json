@@ -3,7 +3,7 @@
   "variables": [
     {
       "identifier": 0,
-      "name": "A",
+      "name": "A1",
       "unit": "Pa",
       "description": "Base yield strength"
     },

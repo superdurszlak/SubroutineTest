@@ -27,4 +27,3 @@ class AssemblyBuilder(BaseBuilder):
         self._provided_arguments_dict = {
             ASSEMBLY_NAME: assembly_name
         }
-        pass

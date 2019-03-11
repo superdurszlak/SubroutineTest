@@ -4,6 +4,7 @@ import config
 from src.builders import *
 from src.builders.assembly_builder import AssemblyBuilder
 from src.builders.border_conditions_builder import BorderConditionsBuilder
+from src.builders.field_output_request_builder import FieldOutputRequestBuilder
 from src.builders.flat_specimen_part_builder import FlatSpecimenPartBuilder
 from src.builders.flat_specimen_sketch_builder import FlatSpecimenSketchBuilder
 from src.builders.job_builder import JobBuilder
@@ -60,6 +61,7 @@ class FlatTensile2DTestHandler(BaseSimulationHandler):
         part_builder = FlatSpecimenPartBuilder()
         assembly_builder = AssemblyBuilder()
         step_builder = StepBuilder()
+        output_builder = FieldOutputRequestBuilder()
         bc_builder = BorderConditionsBuilder()
         initial_field_builder = TemperatureFieldBuilder()
         job_buidler = JobBuilder()
@@ -69,7 +71,8 @@ class FlatTensile2DTestHandler(BaseSimulationHandler):
         material_builder.next_builder = part_builder
         part_builder.next_builder = assembly_builder
         assembly_builder.next_builder = step_builder
-        step_builder.next_builder = bc_builder
+        step_builder.next_builder = output_builder
+        output_builder.next_builder = bc_builder
         bc_builder.next_builder = initial_field_builder
         initial_field_builder.next_builder = job_buidler
         return [
