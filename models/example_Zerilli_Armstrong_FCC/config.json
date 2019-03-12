@@ -1,0 +1,35 @@
+{
+  "name": "Zerilli-Armstrong (FCC)",
+  "variables": [
+    {
+      "identifier": 0,
+      "name": "C2",
+      "unit": "Pa",
+      "description": "Base thermal / work hardening stress"
+    },
+    {
+      "identifier": 1,
+      "name": "C3",
+      "unit": "1/K",
+      "description": "Purely thermal component"
+    },
+    {
+      "identifier": 2,
+      "name": "C4",
+      "unit": "1/K",
+      "description": "Thermal / rate dependent component"
+    },
+    {
+      "identifier": 3,
+      "name": "C6",
+      "unit": "Pa",
+      "description": "Base a-thermal stress"
+    },
+    {
+      "identifier": 4,
+      "name": "E*0",
+      "unit": "1/s",
+      "description": "Reference strain rate"
+    }
+  ]
+}
