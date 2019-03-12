@@ -18,7 +18,7 @@ The plugin is part of my Master's Thesis "Assessment of material models describi
 To install SubroutineTest plugin, copy entire project tree to *<Abaqus installation directory>/SIMULIA/6.14-3/code/python2.7/lib/abaqus_plugins*. 
 Then, enter *SubroutineTest* folder and run *setup.py* script to compile project sources. To be able to use the plugin, you need to restart Abaqus CAE if one is running.
 
-In order to run Abaqus jobs with user subroutines, you need to install Intel Fortran Compiler (ifort) first, which is bundled with Intel Parallel Studio, which in turn you have to integrate, and then configure Abaqus Command and Abaqus CAE to start with Intel Parallel Studio running in background with proper arguments. To accomplish this, refer to manuals and documentation provided by 3DS and Intel. You may also find various tips shared at ResearchGate useful. Installation process may differ depending on exact versions of software.
+In order to run Abaqus jobs with user subroutines, you need to install Intel Fortran Compiler (ifort) first, which is bundled with Intel Parallel Studio, which in turn you have to integrate with MS Visual Studio. Then you need to configure Abaqus Command and Abaqus CAE to start with Intel Parallel Studio running in background with proper arguments. To accomplish this, refer to manuals and documentation provided by 3DS and Intel. You may also find various tips shared at ResearchGate useful. Installation process may differ depending on exact versions of software.
 
 ## Usage
 
