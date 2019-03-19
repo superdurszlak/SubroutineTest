@@ -101,4 +101,5 @@ class MaterialEditorHandler(BaseHandler):
         """
         selected_model = self.models[self.chosen_model_variable.get()]
         UserModelTemplate(name=self.model_variable_entry.get(), master=self.__materials_container,
-                          basic_model=self.basic_model, constitutive_model=selected_model)
+                          subroutine_path=selected_model.subroutine_path, model_name=selected_model.name,
+                          basic_model=self.basic_model.properties, constitutive_model=selected_model.properties)

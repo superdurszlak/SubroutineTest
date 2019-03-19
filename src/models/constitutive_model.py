@@ -49,3 +49,13 @@ class ConstitutiveModel:
             description_label = Label(frame, text=user_variable[config.KEY_DESCRIPTION])
             description_label.grid(row=row, column=3, sticky=W, padx=config.ELEMENT_PADDING,
                                    pady=config.ELEMENT_PADDING)
+
+    @property
+    def properties(self):
+        return [
+            {
+                config.KEY_VARIABLE_NAME: v[config.KEY_VARIABLE_NAME],
+                config.KEY_HOLDER: v[config.KEY_HOLDER].get()
+            }
+            for v in self.variables
+        ]

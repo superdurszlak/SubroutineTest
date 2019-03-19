@@ -94,3 +94,14 @@ class BasicModel:
                                         pady=config.ELEMENT_PADDING)
         self._inelastic_heat_unit.grid(row=3, column=2, sticky=W, padx=config.ELEMENT_PADDING,
                                        pady=config.ELEMENT_PADDING)
+
+    @property
+    def properties(self):
+        return {
+            config.ELASTIC_MODULUS: self.elastic_variable.get(),
+            config.POISSON_RATIO: self.poisson_ratio_variable.get(),
+            config.DENSITY: self.density_variable.get(),
+            config.THERM_CONDUCTIVITY: self.thermal_conductivity_variable.get(),
+            config.HEAT_CAPACITY: self.heat_capacity_variable.get(),
+            config.INELASTIC_HEAT: self.inelastic_heat_variable.get()
+        }

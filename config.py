@@ -24,6 +24,7 @@ KEY_HOLDER = u'holder'
 ROOT_DIR = os.path.dirname(os.path.realpath(__file__))
 MODEL_DIR = os.path.join(ROOT_DIR, 'models')
 RESOURCES_DIR = os.path.join(ROOT_DIR, 'resources')
+HOME_DIR = os.path.expanduser('~')
 
 ABSOLUTE_ZERO = 0.0
 STEFAN_BOLTZMANN = 5.670367e-8
@@ -32,5 +33,17 @@ MESH_MIN_SIZE_FACTOR = 0.1
 NUM_INTERVALS = 100
 
 TOOLTIP_DELAY = 500
+
+ELASTIC_MODULUS = 'elastic_modulus'
+POISSON_RATIO = 'poisson_ratio'
+DENSITY = 'density'
+THERM_CONDUCTIVITY = 'thermal_conductivity'
+HEAT_CAPACITY = 'heat_capacity'
+INELASTIC_HEAT = 'inelastic_heat_fraction'
+
+SUBROUTINE_PATH = 'subroutine_path'
+NAME = 'model_name'
+BASIC_PROPERTIES = 'basic_properties'
+MODEL_PROPERTIES = 'model_properties'
 
 VERSION = '0.1'
