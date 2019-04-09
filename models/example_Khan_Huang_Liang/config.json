@@ -1,0 +1,53 @@
+{
+  "name": "Khan-Huang-Liang",
+  "variables": [
+    {
+      "identifier": 0,
+      "name": "A",
+      "unit": "Pa",
+      "description": "Base yield strength"
+    },
+    {
+      "identifier": 1,
+      "name": "B",
+      "unit": "Pa",
+      "description": "Work hardening coefficient"
+    },
+    {
+      "identifier": 2,
+      "name": "n0",
+      "unit": "-",
+      "description": "Work hardening exponent"
+    },
+    {
+      "identifier": 3,
+      "name": "n1",
+      "unit": "-",
+      "description": "Strain rate hardening exponent"
+    },
+    {
+      "identifier": 4,
+      "name": "C",
+      "unit": "-",
+      "description": "Strain rate hardening exponent"
+    },
+    {
+      "identifier": 5,
+      "name": "m",
+      "unit": "-",
+      "description": "Thermal softening exponent"
+    },
+    {
+      "identifier": 6,
+      "name": "T0",
+      "unit": "K",
+      "description": "Reference temperature"
+    },
+    {
+      "identifier": 7,
+      "name": "Tm",
+      "unit": "K",
+      "description": "Melting point"
+    }
+  ]
+}
