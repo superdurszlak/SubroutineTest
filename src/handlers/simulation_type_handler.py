@@ -7,6 +7,7 @@ from src.builders import *
 from src.handlers.base_handler import BaseHandler
 from src.handlers.simulation_handler.flat_tensile_2d_test_handler import FlatTensile2DTestHandler
 from src.handlers.simulation_handler.import_to_existing_model_handler import ImportToExistingModelHandler
+from src.handlers.simulation_handler.taylor_impact_3d_test_handler import TaylorImpact3DTestHandler
 
 
 class SimulationTypeHandler(BaseHandler):
@@ -17,7 +18,8 @@ class SimulationTypeHandler(BaseHandler):
     def __init__(self, frame):
         self.__simulation_types_map = {
             'Flat tensile test, 2D': FlatTensile2DTestHandler(),
-            'Import material to model': ImportToExistingModelHandler()
+            'Import material to model': ImportToExistingModelHandler(),
+            'Taylor impact test, 3D': TaylorImpact3DTestHandler()
         }
         self.__material_templates_list = None
         super(SimulationTypeHandler, self).__init__(frame)
