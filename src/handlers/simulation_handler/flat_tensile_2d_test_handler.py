@@ -50,7 +50,9 @@ class FlatTensile2DTestHandler(BaseSimulationHandler):
             MESH_EDGE_LENGTH: self.mesh_edge_length.get() * conversion_factor,
             DISPLACEMENT_DURATION: self.duration.get(),
             GRIP_DISPLACEMENT: self.tool_displacement.get() * conversion_factor,
-            SPECIMEN_TEMPERATURE: self.initial_temperature.get()
+            SPECIMEN_TEMPERATURE: self.initial_temperature.get(),
+            SOURCE_MATERIAL_NAME: self.material_name.get(),
+            TARGET_MATERIAL_NAME: self.material_name.get()
         }
 
     @property
@@ -106,23 +108,23 @@ class FlatTensile2DTestHandler(BaseSimulationHandler):
         specimen_frame.grid(column=0, row=0, sticky=W + E + N + S, padx=config.FRAME_PADDING,
                             pady=config.FRAME_PADDING)
 
-        self.__create_entry_line(self.material_name, 'Material', None, specimen_frame, 0, None)
+        self._create_entry_line(self.material_name, 'Material', None, specimen_frame, 0, None)
 
         value_label = Label(specimen_frame, text='Value')
         value_label.grid(column=1, row=1, sticky=W, padx=config.ELEMENT_PADDING, pady=config.ELEMENT_PADDING)
         unit_label = Label(specimen_frame, text='Unit')
         unit_label.grid(column=2, row=1, sticky=W, padx=config.ELEMENT_PADDING, pady=config.ELEMENT_PADDING)
 
-        self.__create_entry_line(self.reduced_section_width, 'Reduced section width', 'mm', specimen_frame, 2,
-                                 (self.__dimension_validator, '%P'))
-        self.__create_entry_line(self.reduced_section_length, 'Reduced section length', 'mm', specimen_frame, 3,
-                                 (self.__dimension_validator, '%P'))
-        self.__create_entry_line(self.grip_section_width, 'Grip width', 'mm', specimen_frame, 4,
-                                 (self.__dimension_validator, '%P'))
-        self.__create_entry_line(self.grip_section_length, 'Grip length', 'mm', specimen_frame, 5,
-                                 (self.__dimension_validator, '%P'))
-        self.__create_entry_line(self.taper_length, 'Taper section length', 'mm', specimen_frame, 6,
-                                 (self.__dimension_validator, '%P'))
+        self._create_entry_line(self.reduced_section_width, 'Reduced section width', 'mm', specimen_frame, 2,
+                                (self.__dimension_validator, '%P'))
+        self._create_entry_line(self.reduced_section_length, 'Reduced section length', 'mm', specimen_frame, 3,
+                                (self.__dimension_validator, '%P'))
+        self._create_entry_line(self.grip_section_width, 'Grip width', 'mm', specimen_frame, 4,
+                                (self.__dimension_validator, '%P'))
+        self._create_entry_line(self.grip_section_length, 'Grip length', 'mm', specimen_frame, 5,
+                                (self.__dimension_validator, '%P'))
+        self._create_entry_line(self.taper_length, 'Taper section length', 'mm', specimen_frame, 6,
+                                (self.__dimension_validator, '%P'))
 
     def __create_model_entries(self, frame):
         """
@@ -140,14 +142,14 @@ class FlatTensile2DTestHandler(BaseSimulationHandler):
         unit_label = Label(conditions_frame, text='Unit')
         unit_label.grid(column=2, row=0, sticky=W, padx=config.ELEMENT_PADDING, pady=config.ELEMENT_PADDING)
 
-        self.__create_entry_line(self.initial_temperature, 'Initial temperature', 'K', conditions_frame, 1,
-                                 (self.__positive_validator, '%P'))
-        self.__create_entry_line(self.tool_displacement, 'Tool displacement', 'mm', conditions_frame, 2,
-                                 (self.__positive_validator, '%P'))
-        self.__create_entry_line(self.duration, 'Duration', 's', conditions_frame, 3,
-                                 (self.__positive_validator, '%P'))
-        self.__create_entry_line(self.mesh_edge_length, 'Mesh edge length', 'mm', conditions_frame, 4,
-                                 (self.__positive_validator, '%P'))
+        self._create_entry_line(self.initial_temperature, 'Initial temperature', 'K', conditions_frame, 1,
+                                (self.__positive_validator, '%P'))
+        self._create_entry_line(self.tool_displacement, 'Tool displacement', 'mm', conditions_frame, 2,
+                                (self.__positive_validator, '%P'))
+        self._create_entry_line(self.duration, 'Duration', 's', conditions_frame, 3,
+                                (self.__positive_validator, '%P'))
+        self._create_entry_line(self.mesh_edge_length, 'Mesh edge length', 'mm', conditions_frame, 4,
+                                (self.__positive_validator, '%P'))
 
     def __validate_dimensions(self, v):
         """
@@ -164,33 +166,6 @@ class FlatTensile2DTestHandler(BaseSimulationHandler):
         reduced_section_width = self.reduced_section_width.get()
         taper_length = self.taper_length.get()
         return grip_width > reduced_section_width and (grip_width - reduced_section_width) / 2.0 <= taper_length
-
-    @staticmethod
-    def __create_entry_line(variable, name, unit, frame, row_index, validator):
-        """
-        Create label and entry for given variable
-
-        :param variable: DoubleVar that has to be handled
-        :param name: visible name of entry
-        :param unit: unit of variable
-        :param frame: parent frame for entry
-        :param row_index: grid row in which the entry will be placed
-        :param validator: Value validator
-        :return: None
-        """
-        if name is not None:
-            variable_label = Label(frame, text=name)
-            variable_label.grid(column=0, row=row_index, sticky=E, padx=config.ELEMENT_PADDING,
-                                pady=config.ELEMENT_PADDING)
-        if validator is not None:
-            variable_entry = Entry(frame, textvariable=variable, validate='focusout', validatecommand=validator)
-        else:
-            variable_entry = Entry(frame, textvariable=variable)
-        variable_entry.grid(column=1, row=row_index, sticky=W, padx=config.ELEMENT_PADDING, pady=config.ELEMENT_PADDING)
-        if unit is not None:
-            variable_unit = Label(frame, text=unit)
-            variable_unit.grid(column=2, row=row_index, sticky=W, padx=config.ELEMENT_PADDING,
-                               pady=config.ELEMENT_PADDING)
 
     def _validate_parameters(self):
         positive_values = {

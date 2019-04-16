@@ -13,7 +13,7 @@ class FlatSpecimenPartBuilder(BaseBuilder):
         self._required_arguments = [
             SKETCH_NAME,
             MESH_EDGE_LENGTH,
-            MATERIAL_NAME,
+            TARGET_MATERIAL_NAME,
             MODEL_NAME
         ]
         self._provided_arguments = [
@@ -27,7 +27,7 @@ class FlatSpecimenPartBuilder(BaseBuilder):
     def _build(self, **kwargs):
         sketch_name = kwargs[SKETCH_NAME]
         mesh_edge_length = kwargs[MESH_EDGE_LENGTH]
-        material_name = kwargs[MATERIAL_NAME]
+        material_name = kwargs[TARGET_MATERIAL_NAME]
         model_name = kwargs[MODEL_NAME]
         part_name = 'Specimen_Flat_2D'
         section_name = 'Specimen_Flat_2D_section'

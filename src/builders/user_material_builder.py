@@ -10,7 +10,7 @@ class UserMaterialBuilder(BaseBuilder):
         super(UserMaterialBuilder, self).__init__()
         self._required_arguments = [
             MATERIAL_TEMPLATE,
-            MATERIAL_NAME,
+            TARGET_MATERIAL_NAME,
             MODEL_NAME
         ]
         self._provided_arguments = [
@@ -19,7 +19,7 @@ class UserMaterialBuilder(BaseBuilder):
 
     def _build(self, **kwargs):
         model_name = kwargs[MODEL_NAME]
-        material_name = kwargs[MATERIAL_NAME]
+        material_name = kwargs[TARGET_MATERIAL_NAME]
         material_template = kwargs[MATERIAL_TEMPLATE]
         density = material_template.density
         elastic_modulus = material_template.elastic_modulus

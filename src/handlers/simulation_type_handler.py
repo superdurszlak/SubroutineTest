@@ -6,6 +6,7 @@ import config
 from src.builders import *
 from src.handlers.base_handler import BaseHandler
 from src.handlers.simulation_handler.flat_tensile_2d_test_handler import FlatTensile2DTestHandler
+from src.handlers.simulation_handler.import_to_existing_model_handler import ImportToExistingModelHandler
 
 
 class SimulationTypeHandler(BaseHandler):
@@ -16,6 +17,7 @@ class SimulationTypeHandler(BaseHandler):
     def __init__(self, frame):
         self.__simulation_types_map = {
             'Flat tensile test, 2D': FlatTensile2DTestHandler(),
+            'Import material to model': ImportToExistingModelHandler()
         }
         self.__material_templates_list = None
         super(SimulationTypeHandler, self).__init__(frame)
@@ -36,7 +38,8 @@ class SimulationTypeHandler(BaseHandler):
         """
         choice = self.__simulation_type_variable.get()
         handler = self.__simulation_types_map[choice]
-        material_name = handler.material_name.get()
+        handler_parameters = handler.parameters
+        material_name = handler_parameters[SOURCE_MATERIAL_NAME]
         material_template = self.__material_templates_list.find(material_name)
         cpu_num = self.cpu_count_variable.get()
         max_cpu = cpu_count()
@@ -45,11 +48,10 @@ class SimulationTypeHandler(BaseHandler):
             MODEL_NAME: self.model_name_variable.get(),
             JOB_NAME: self.job_name_variable.get(),
             RUN_JOB_AUTOMATICALLY: self.job_run_variable.get(),
-            MATERIAL_NAME: material_name,
             MATERIAL_TEMPLATE: material_template,
             CPU_COUNT: cpu_num
         }
-        return dict(handler.parameters, **parameters)
+        return dict(handler_parameters, **parameters)
 
     @property
     def builders(self):
