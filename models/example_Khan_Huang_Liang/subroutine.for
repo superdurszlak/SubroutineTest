@@ -2,7 +2,7 @@
      1     DTEMP,NOEL,NPT,LAYER,KSPT,KSTEP,KINC,CMNAME,NSTATV,
      2     STATEV,NUMFIELDV,PREDEF,DPRED,NUMPROPS,PROPS)
 C
-	  INCLUDE 'aba_param_dp.INC'
+	  INCLUDE 'aba_param.INC'
 C
 	  CHARACTER*80 CMNAME
 	  DIMENSION HARD(3), STATEV(NSTATV), TIME(1), PREDEF(NUMFIELDV), DPRED(NUMFIELDV), PROPS(*)
@@ -24,7 +24,7 @@ C
       edot = max(EQPLASRT, 1.0D-6)
       edlog = max(log(edot), 1.0D-2)
       edinv = 1.0D0 / max(edotn, 1.0D-2)
-      T = TEMP
+      T = TEMPOLD(km)
       Th = (T - Tr) / (Tm - Tr)
       Th = min(1.0D0, max(0.0D0, Th))
 
@@ -60,7 +60,7 @@ C WRITE ONLY -
      *     YIELD, DYIELDDTEMP, DYIELDDEQPS,
      *     STATENEW )
 C
-      INCLUDE 'vaba_param_dp.INC'
+      INCLUDE 'vaba_param.INC'
 C
       DIMENSION PROPS(NPROPS), TEMPOLD(NBLOCK), TEMPNEW(NBLOCK),
      1   FIELDOLD(NBLOCK,NFIELDV), FIELDNEW(NBLOCK,NFIELDV),

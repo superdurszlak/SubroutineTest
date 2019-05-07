@@ -61,7 +61,7 @@ C WRITE ONLY -
      *     YIELD, DYIELDDTEMP, DYIELDDEQPS,
      *     STATENEW )
 C
-      INCLUDE 'vaba_param_dp.INC'
+      INCLUDE 'vaba_param_sp.INC'
 C
       DIMENSION PROPS(NPROPS), TEMPOLD(NBLOCK), TEMPNEW(NBLOCK),
      1   FIELDOLD(NBLOCK,NFIELDV), FIELDNEW(NBLOCK,NFIELDV),
@@ -91,7 +91,7 @@ C
           edot = EQPSRATE(km)
           edotn = max(edot / edot0, 1.0D-3)
           edinv = 1.0 / max(edotn, 1.0D-2)
-          T = TEMP
+          T = TEMPOLD(km)
           Th = (T - Tr) / (Tm - Tr)
 
           Ehard = A1 * e ** n1
