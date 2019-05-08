@@ -24,7 +24,7 @@ C
       edot = max(EQPLASRT, 1.0D-6)
       edlog = max(log(edot), 1.0D-2)
       edinv = 1.0D0 / max(edotn, 1.0D-2)
-      T = TEMPOLD(km)
+      T = TEMP
       Th = (T - Tr) / (Tm - Tr)
       Th = min(1.0D0, max(0.0D0, Th))
 
@@ -90,7 +90,7 @@ C
           edot = max(EQPSRATE(km), 1.0D-6)
           edlog = max(log(edot), 1.0D-2)
           edinv = 1.0D0 / max(edotn, 1.0D-2)
-          T = TEMP
+          T = TEMPOLD(km)
           Th = (T - Tr) / (Tm - Tr)
           Th = min(1.0D0, max(0.0D0, Th))
 
