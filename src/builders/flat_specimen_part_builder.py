@@ -20,8 +20,8 @@ class FlatSpecimenPartBuilder(BaseBuilder):
             PART_NAME,
             SECTION_NAME,
             FULL_VOLUME_SET,
-            MOVABLE_GRIP_SET,
-            FIXED_GRIP_SET
+            MOVABLE_SET,
+            FIXED_SET
         ]
 
     def _build(self, **kwargs):
@@ -43,8 +43,8 @@ class FlatSpecimenPartBuilder(BaseBuilder):
             PART_NAME: part_name,
             SECTION_NAME: section_name,
             FULL_VOLUME_SET: full_volume_set,
-            FIXED_GRIP_SET: fixed_grip_set,
-            MOVABLE_GRIP_SET: movable_grip_set
+            FIXED_SET: fixed_grip_set,
+            MOVABLE_SET: movable_grip_set
         }
 
     @staticmethod

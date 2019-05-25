@@ -9,12 +9,12 @@ class BorderConditionsBuilder(BaseBuilder):
     def __init__(self):
         super(BorderConditionsBuilder, self).__init__()
         self._required_arguments = [
-            FIXED_GRIP_SET,
-            MOVABLE_GRIP_SET,
+            FIXED_SET,
+            MOVABLE_SET,
             MODEL_NAME,
             ASSEMBLY_NAME,
             STEP_NAME,
-            GRIP_DISPLACEMENT
+            TOOL_DISPLACEMENT
         ]
         self._provided_arguments = [
             ENCASTRE_BC,
@@ -26,10 +26,10 @@ class BorderConditionsBuilder(BaseBuilder):
         displacement_bc = 'Displacement_BC'
         model_name = kwargs[MODEL_NAME]
         assembly_name = kwargs[ASSEMBLY_NAME]
-        fixed_grip_set = kwargs[FIXED_GRIP_SET]
-        movable_grip_set = kwargs[MOVABLE_GRIP_SET]
+        fixed_grip_set = kwargs[FIXED_SET]
+        movable_grip_set = kwargs[MOVABLE_SET]
         step_name = kwargs[STEP_NAME]
-        grip_displacement = kwargs[GRIP_DISPLACEMENT]
+        grip_displacement = kwargs[TOOL_DISPLACEMENT]
 
         self.__create_encastre_bc(model_name, assembly_name, fixed_grip_set, encastre_bc)
         self.__create_displacement_bc(model_name, assembly_name, movable_grip_set, displacement_bc, grip_displacement,

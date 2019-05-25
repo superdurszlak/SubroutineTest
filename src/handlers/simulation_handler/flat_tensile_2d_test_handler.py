@@ -49,7 +49,7 @@ class FlatTensile2DTestHandler(BaseSimulationHandler):
             REDUCED_LENGTH: self.reduced_section_length.get() * conversion_factor,
             MESH_EDGE_LENGTH: self.mesh_edge_length.get() * conversion_factor,
             DISPLACEMENT_DURATION: self.duration.get(),
-            GRIP_DISPLACEMENT: self.tool_displacement.get() * conversion_factor,
+            TOOL_DISPLACEMENT: self.tool_displacement.get() * conversion_factor,
             SPECIMEN_TEMPERATURE: self.initial_temperature.get(),
             SOURCE_MATERIAL_NAME: self.material_name.get(),
             TARGET_MATERIAL_NAME: self.material_name.get()
@@ -176,7 +176,7 @@ class FlatTensile2DTestHandler(BaseSimulationHandler):
             REDUCED_LENGTH: self.reduced_section_length.get(),
             MESH_EDGE_LENGTH: self.mesh_edge_length.get(),
             DISPLACEMENT_DURATION: self.duration.get(),
-            GRIP_DISPLACEMENT: self.tool_displacement.get(),
+            TOOL_DISPLACEMENT: self.tool_displacement.get(),
             SPECIMEN_TEMPERATURE: self.initial_temperature.get()
         }
         for k, v in positive_values.iteritems():
