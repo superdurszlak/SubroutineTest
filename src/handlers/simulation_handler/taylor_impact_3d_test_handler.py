@@ -25,6 +25,7 @@ class TaylorImpact3DTestHandler(BaseSimulationHandler):
         self.duration = DoubleVar(value=1.0)
         self.mesh_edge_length = DoubleVar(value=1.0)
 
+    @property
     def builders(self):
         # TODO: Compose proper builder sequence for Taylor test
         model_builder = StandardExplicitModelBuilder()
@@ -32,6 +33,7 @@ class TaylorImpact3DTestHandler(BaseSimulationHandler):
             model_builder
         ]
 
+    @property
     def parameters(self):
         self._validate_parameters()
 

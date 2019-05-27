@@ -36,7 +36,7 @@ class CylindricalSpecimenPartBuilder(BaseBuilder):
 
     @staticmethod
     def __assign_material(material_name, model_name, part_name, section_name, set_name):
-        mdb.models[model_name].HomogenousSolidSection(
+        mdb.models[model_name].HomogeneousSolidSection(
             name=section_name,
             material=material_name,
             thickness=None)
@@ -45,7 +45,7 @@ class CylindricalSpecimenPartBuilder(BaseBuilder):
         region = part.Set(cells=cells, name=set_name)
         part.SectionAssignment(
             region=region,
-            section_name=section_name,
+            sectionName=section_name,
             offset=0.0,
             offsetType=MIDDLE_SURFACE,
             offsetField='',
@@ -71,6 +71,6 @@ class CylindricalSpecimenPartBuilder(BaseBuilder):
         elem_type_3 = mesh.ElemType(elemCode=C3D4T, elemLibrary=EXPLICIT,
                                     secondOrderAccuracy=OFF, distortionControl=DEFAULT)
         part.setElementType(
-            regions=pickedRegions,
+            regions=regions,
             elemTypes=(elem_type_1, elem_type_2, elem_type_3))
         part.generateMesh()

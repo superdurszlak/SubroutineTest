@@ -3,6 +3,8 @@ from Tkinter import *
 
 import config
 from src.builders import *
+from src.builders.cylindrical_specimen_part_builder import CylindricalSpecimenPartBuilder
+from src.builders.cylindrical_specimen_sketch_builder import CylindricalSpecimenSketchBuilder
 from src.builders.standard_explicit_model_builder import StandardExplicitModelBuilder
 from src.builders.user_material_builder import UserMaterialBuilder
 from src.handlers.simulation_handler.base_simulation_handler import BaseSimulationHandler
@@ -27,17 +29,25 @@ class Compression3DTestHandler(BaseSimulationHandler):
         self.duration = DoubleVar(value=1.0)
         self.mesh_edge_length = DoubleVar(value=1.0)
 
+    @property
     def builders(self):
         # TODO: Compose proper builder sequence for compression test
         model_builder = StandardExplicitModelBuilder()
         user_material_builder = UserMaterialBuilder()
+        sketch_builder = CylindricalSpecimenSketchBuilder()
+        part_builder = CylindricalSpecimenPartBuilder()
 
         model_builder.next_builder = user_material_builder
+        user_material_builder.next_builder = sketch_builder
+        sketch_builder.next_builder = part_builder
         return [
             model_builder,
-            user_material_builder
+            user_material_builder,
+            sketch_builder,
+            part_builder
         ]
 
+    @property
     def parameters(self):
         self._validate_parameters()
 
@@ -142,8 +152,6 @@ class Compression3DTestHandler(BaseSimulationHandler):
             SPECIMEN_BASE_RADIUS: self.specimen_radius.get() * scaling_factor,
             SPECIMEN_LENGTH: self.specimen_length.get() * scaling_factor,
             TOOL_DISPLACEMENT: self.tool_displacement.get(),
-            SOURCE_MATERIAL_NAME: self.material_name.get(),
-            TARGET_MATERIAL_NAME: self.material_name.get(),
             SPECIMEN_TEMPERATURE: self.initial_temperature.get(),
             MESH_EDGE_LENGTH: self.mesh_edge_length.get(),
             DISPLACEMENT_DURATION: self.duration.get(),
