@@ -7,9 +7,9 @@ from src.builders import *
 from src.builders.base_builder import BaseBuilder
 
 
-class StepBuilder(BaseBuilder):
+class StaticStepBuilder(BaseBuilder):
     def __init__(self):
-        super(StepBuilder, self).__init__()
+        super(StaticStepBuilder, self).__init__()
         self._required_arguments = [
             MODEL_NAME,
             DISPLACEMENT_DURATION

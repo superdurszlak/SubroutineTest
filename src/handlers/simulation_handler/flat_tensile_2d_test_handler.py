@@ -2,14 +2,14 @@ from Tkinter import *
 
 import config
 from src.builders import *
-from src.builders.assembly_builder import AssemblyBuilder
-from src.builders.border_conditions_builder import BorderConditionsBuilder
-from src.builders.field_output_request_builder import FieldOutputRequestBuilder
+from src.builders.flat_tensile_2d_test_assembly_builder import FlatTensile2DTestAssemblyBuilder
+from src.builders.flat_tensile_border_conditions_builder import FlatTensileBorderConditionsBuilder
+from src.builders.static_field_output_request_builder import StaticFieldOutputRequestBuilder
 from src.builders.flat_specimen_part_builder import FlatSpecimenPartBuilder
 from src.builders.flat_specimen_sketch_builder import FlatSpecimenSketchBuilder
 from src.builders.job_builder import JobBuilder
 from src.builders.standard_explicit_model_builder import StandardExplicitModelBuilder
-from src.builders.step_builder import StepBuilder
+from src.builders.static_step_builder import StaticStepBuilder
 from src.builders.temperature_field_builder import TemperatureFieldBuilder
 from src.builders.user_material_builder import UserMaterialBuilder
 from src.handlers.simulation_handler.base_simulation_handler import BaseSimulationHandler
@@ -61,10 +61,10 @@ class FlatTensile2DTestHandler(BaseSimulationHandler):
         sketch_builder = FlatSpecimenSketchBuilder()
         material_builder = UserMaterialBuilder()
         part_builder = FlatSpecimenPartBuilder()
-        assembly_builder = AssemblyBuilder()
-        step_builder = StepBuilder()
-        output_builder = FieldOutputRequestBuilder()
-        bc_builder = BorderConditionsBuilder()
+        assembly_builder = FlatTensile2DTestAssemblyBuilder()
+        step_builder = StaticStepBuilder()
+        output_builder = StaticFieldOutputRequestBuilder()
+        bc_builder = FlatTensileBorderConditionsBuilder()
         initial_field_builder = TemperatureFieldBuilder()
         job_buidler = JobBuilder()
 

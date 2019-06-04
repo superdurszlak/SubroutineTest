@@ -31,6 +31,7 @@ class CylindricalSpecimenPartBuilder(BaseBuilder):
         self.__build_geometry(model_name, part_name, sketch_name)
         self.__assign_material(material_name, model_name, part_name, section_name, set_name)
         self.__create_mesh(mesh_edge_length, model_name, part_name)
+        self.__create_reference_point(model_name, part_name)
         self._provided_arguments_dict[PART_NAME] = part_name
         self._provided_arguments_dict[FULL_VOLUME_SET] = set_name
 
@@ -74,3 +75,9 @@ class CylindricalSpecimenPartBuilder(BaseBuilder):
             regions=regions,
             elemTypes=(elem_type_1, elem_type_2, elem_type_3))
         part.generateMesh()
+
+    @staticmethod
+    def __create_reference_point(model_name, part_name):
+        part = mdb.models[model_name].parts[part_name]
+        edges = part.edges
+        part.ReferencePoint(point=part.InterestingPoint(edge=edges[0], rule=CENTER))

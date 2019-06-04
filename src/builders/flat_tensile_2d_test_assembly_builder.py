@@ -5,9 +5,9 @@ from src.builders import *
 from src.builders.base_builder import BaseBuilder
 
 
-class AssemblyBuilder(BaseBuilder):
+class FlatTensile2DTestAssemblyBuilder(BaseBuilder):
     def __init__(self):
-        super(AssemblyBuilder, self).__init__()
+        super(FlatTensile2DTestAssemblyBuilder, self).__init__()
         self._required_arguments = [
             PART_NAME,
             MODEL_NAME

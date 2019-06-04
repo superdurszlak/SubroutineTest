@@ -1,11 +1,19 @@
-import math
 from Tkinter import *
 
 import config
 from src.builders import *
+from src.builders.analytical_shell_round_tool_part_builder import AnalyticalShellRoundToolPartBuilder
+from src.builders.compression_3d_border_conditions_builder import Compression3DBorderConditionsBuilder
+from src.builders.compression_3d_test_assembly_builder import Compression3DTestAssemblyBuilder
+from src.builders.compression_3d_test_contact_builder import Compression3DTestContactBuilder
+from src.builders.compression_3d_test_surfaces_builder import Compression3DTestSurfacesBuilder
 from src.builders.cylindrical_specimen_part_builder import CylindricalSpecimenPartBuilder
 from src.builders.cylindrical_specimen_sketch_builder import CylindricalSpecimenSketchBuilder
+from src.builders.dynamic_field_output_request_builder import DynamicFieldOutputRequestBuilder
+from src.builders.dynamic_step_builder import DynamicStepBuilder
+from src.builders.job_builder import JobBuilder
 from src.builders.standard_explicit_model_builder import StandardExplicitModelBuilder
+from src.builders.temperature_field_builder import TemperatureFieldBuilder
 from src.builders.user_material_builder import UserMaterialBuilder
 from src.handlers.simulation_handler.base_simulation_handler import BaseSimulationHandler
 from src.utils import is_positive_float
@@ -34,17 +42,39 @@ class Compression3DTestHandler(BaseSimulationHandler):
         # TODO: Compose proper builder sequence for compression test
         model_builder = StandardExplicitModelBuilder()
         user_material_builder = UserMaterialBuilder()
-        sketch_builder = CylindricalSpecimenSketchBuilder()
-        part_builder = CylindricalSpecimenPartBuilder()
+        specimen_sketch_builder = CylindricalSpecimenSketchBuilder()
+        specimen_part_builder = CylindricalSpecimenPartBuilder()
+        tool_part_builder = AnalyticalShellRoundToolPartBuilder()
+        assembly_builder = Compression3DTestAssemblyBuilder()
+        surfaces_builder = Compression3DTestSurfacesBuilder()
+        contact_builder = Compression3DTestContactBuilder()
+        step_builder = DynamicStepBuilder()
+        field_output_request_builder = DynamicFieldOutputRequestBuilder()
+        border_condition_builder = Compression3DBorderConditionsBuilder()
+        temperature_field_builder = TemperatureFieldBuilder()
+        job_builder = JobBuilder()
 
         model_builder.next_builder = user_material_builder
-        user_material_builder.next_builder = sketch_builder
-        sketch_builder.next_builder = part_builder
+        user_material_builder.next_builder = specimen_sketch_builder
+        specimen_sketch_builder.next_builder = specimen_part_builder
+        specimen_part_builder.next_builder = tool_part_builder
+        tool_part_builder.next_builder = assembly_builder
+        assembly_builder.next_builder = surfaces_builder
+        surfaces_builder.next_builder = contact_builder
+        contact_builder.next_builder = step_builder
+        step_builder.next_builder = field_output_request_builder
+        field_output_request_builder.next_builder = border_condition_builder
+        border_condition_builder.next_builder = temperature_field_builder
+        temperature_field_builder.next_builder = job_builder
         return [
             model_builder,
             user_material_builder,
-            sketch_builder,
-            part_builder
+            specimen_sketch_builder,
+            specimen_part_builder,
+            tool_part_builder,
+            assembly_builder,
+            surfaces_builder,
+            contact_builder
         ]
 
     @property
