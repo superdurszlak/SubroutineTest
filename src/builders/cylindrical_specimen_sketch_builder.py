@@ -37,6 +37,7 @@ class CylindricalSpecimenSketchBuilder(BaseBuilder):
         sketch.ConstructionLine(point1=(0.0, 0.0), angle=90.0)
         sketch.VerticalConstraint(entity=geometry[2], addUndoState=False)
         sketch.rectangle(point1=(0.0, 0.0), point2=(0.01, 0.01))
+        sketch.FixedConstraint(entity=vertices[0])
         sketch.CoincidentConstraint(entity1=vertices[0], entity2=geometry[2], addUndoState=False)
 
     @staticmethod

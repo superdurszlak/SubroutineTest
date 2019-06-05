@@ -13,7 +13,9 @@ class AnalyticalShellRoundToolPartBuilder(BaseBuilder):
             MODEL_NAME
         ]
         self._provided_arguments = [
-            TOOL_PART_NAME
+            TOOL_PART_NAME,
+            MOVABLE_SET,
+            FIXED_SET
         ]
 
     def _build(self, **kwargs):
@@ -21,11 +23,15 @@ class AnalyticalShellRoundToolPartBuilder(BaseBuilder):
         model_name = kwargs[MODEL_NAME]
         part_name = "Tool"
         sketch_name = "Tool_sketch"
+        set_name = "Tool_Set"
         self.__create_sketch(model_name, sketch_name, tool_radius)
         self.__create_part(model_name, sketch_name, part_name)
+        self.__create_set(model_name, part_name, set_name)
 
         self._provided_arguments_dict = {
-            TOOL_PART_NAME: part_name
+            TOOL_PART_NAME: part_name,
+            MOVABLE_SET: set_name,
+            FIXED_SET: set_name
         }
 
     @staticmethod
@@ -50,3 +56,10 @@ class AnalyticalShellRoundToolPartBuilder(BaseBuilder):
         vertices = part.vertices
         part.ReferencePoint(point=vertices[1])
         del mdb.models[model_name].sketches[sketch_name]
+
+    @staticmethod
+    def __create_set(model_name, part_name, set_name):
+        part = mdb.models[model_name].parts[part_name]
+        reference_points = part.referencePoints
+        selected_points = (reference_points[2],)
+        part.Set(referencePoints=selected_points, name=set_name)
