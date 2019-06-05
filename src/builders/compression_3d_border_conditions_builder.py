@@ -15,7 +15,8 @@ class Compression3DBorderConditionsBuilder(BaseBorderConditionsBuilder):
             TOOL_LOWER_INSTANCE_NAME,
             TOOL_UPPER_INSTANCE_NAME,
             STEP_NAME,
-            TOOL_DISPLACEMENT
+            TOOL_DISPLACEMENT,
+            SPECIMEN_TEMPERATURE
         ]
         self._provided_arguments = [
             ENCASTRE_BC,
@@ -25,6 +26,9 @@ class Compression3DBorderConditionsBuilder(BaseBorderConditionsBuilder):
     def _build(self, **kwargs):
         encastre_bc = 'Encastre_BC'
         displacement_bc = 'Displacement_BC'
+        upper_tool_temp_bc = 'Upper_Tool_Temp_BC'
+        lower_tool_temp_bc = 'Lower_Tool_Temp_BC'
+        temperature = kwargs[SPECIMEN_TEMPERATURE]
         model_name = kwargs[MODEL_NAME]
         upper_tool_name = kwargs[TOOL_UPPER_INSTANCE_NAME]
         lower_tool_name = kwargs[TOOL_LOWER_INSTANCE_NAME]
@@ -36,8 +40,21 @@ class Compression3DBorderConditionsBuilder(BaseBorderConditionsBuilder):
         self._create_encastre_bc(model_name, lower_tool_name, fixed_grip_set, encastre_bc)
         self._create_displacement_bc(model_name, upper_tool_name, movable_grip_set, displacement_bc, grip_displacement,
                                      step_name)
+        self._create_temperature_bc(model_name, upper_tool_name, movable_grip_set, upper_tool_temp_bc, temperature,
+                                    step_name)
+        self._create_temperature_bc(model_name, lower_tool_name, fixed_grip_set, lower_tool_temp_bc, temperature,
+                                    step_name)
 
         self._provided_arguments_dict = {
             ENCASTRE_BC: encastre_bc,
             DISPLACEMENT_BC: displacement_bc
         }
+
+    @staticmethod
+    def _create_temperature_bc(model_name, tool_name, set_name, bc_name, tool_temperature,
+                               step_name):
+        root_assembly = mdb.models[model_name].rootAssembly
+        region = root_assembly.instances[tool_name].sets[set_name]
+        mdb.models[model_name].TemperatureBC(name=bc_name, createStepName=step_name, region=region, fixed=OFF,
+                                             distributionType=UNIFORM, fieldName='', magnitude=tool_temperature,
+                                             amplitude=UNSET)

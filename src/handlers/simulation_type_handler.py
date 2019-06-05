@@ -18,10 +18,9 @@ class SimulationTypeHandler(BaseHandler):
 
     def __init__(self, frame):
         self.__simulation_types_map = {
-            'Flat tensile test, 2D': FlatTensile2DTestHandler(),
+            '2D tensile, flat': FlatTensile2DTestHandler(),
             'Import material to model': ImportToExistingModelHandler(),
-            'Taylor impact test, 3D (stub)': TaylorImpact3DTestHandler(),
-            'Compression test, 3D (stub)': Compression3DTestHandler()
+            '3D compression': Compression3DTestHandler()
         }
         self.__material_templates_list = None
         super(SimulationTypeHandler, self).__init__(frame)

@@ -35,4 +35,9 @@ class BaseBorderConditionsBuilder(BaseBuilder):
         mdb.models[model_name].TabularAmplitude(name=amplitude_name, timeSpan=STEP,
                                                 smooth=SOLVER_DEFAULT, data=((0.0, 0.0), (1.0, 1.0)))
         mdb.models[model_name].boundaryConditions[displacement_bc].setValuesInStep(stepName=step_name,
-                                                                                   u2=grip_displacement)
+                                                                                   u1=0.0,
+                                                                                   u2=grip_displacement,
+                                                                                   u3=0.0,
+                                                                                   ur1=0.0,
+                                                                                   ur2=0.0,
+                                                                                   ur3=0.0)
