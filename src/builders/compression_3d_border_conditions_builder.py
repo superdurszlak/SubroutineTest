@@ -16,7 +16,8 @@ class Compression3DBorderConditionsBuilder(BaseBorderConditionsBuilder):
             TOOL_UPPER_INSTANCE_NAME,
             STEP_NAME,
             TOOL_DISPLACEMENT,
-            SPECIMEN_TEMPERATURE
+            SPECIMEN_TEMPERATURE,
+            DISPLACEMENT_DURATION
         ]
         self._provided_arguments = [
             ENCASTRE_BC,
@@ -36,10 +37,11 @@ class Compression3DBorderConditionsBuilder(BaseBorderConditionsBuilder):
         movable_grip_set = kwargs[MOVABLE_SET]
         step_name = kwargs[STEP_NAME]
         grip_displacement = kwargs[TOOL_DISPLACEMENT]
+        duration = kwargs[DISPLACEMENT_DURATION]
 
         self._create_encastre_bc(model_name, lower_tool_name, fixed_grip_set, encastre_bc)
         self._create_displacement_bc(model_name, upper_tool_name, movable_grip_set, displacement_bc, grip_displacement,
-                                     step_name)
+                                     step_name, duration)
         self._create_temperature_bc(model_name, upper_tool_name, movable_grip_set, upper_tool_temp_bc, temperature,
                                     step_name)
         self._create_temperature_bc(model_name, lower_tool_name, fixed_grip_set, lower_tool_temp_bc, temperature,

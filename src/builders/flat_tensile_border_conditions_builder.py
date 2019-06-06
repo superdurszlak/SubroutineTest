@@ -14,7 +14,8 @@ class FlatTensileBorderConditionsBuilder(BaseBorderConditionsBuilder):
             MODEL_NAME,
             ASSEMBLY_NAME,
             STEP_NAME,
-            TOOL_DISPLACEMENT
+            TOOL_DISPLACEMENT,
+            DISPLACEMENT_DURATION
         ]
         self._provided_arguments = [
             ENCASTRE_BC,
@@ -30,10 +31,11 @@ class FlatTensileBorderConditionsBuilder(BaseBorderConditionsBuilder):
         movable_grip_set = kwargs[MOVABLE_SET]
         step_name = kwargs[STEP_NAME]
         grip_displacement = kwargs[TOOL_DISPLACEMENT]
+        duration = kwargs[DISPLACEMENT_DURATION]
 
         self._create_encastre_bc(model_name, assembly_name, fixed_grip_set, encastre_bc)
         self._create_displacement_bc(model_name, assembly_name, movable_grip_set, displacement_bc, grip_displacement,
-                                     step_name)
+                                     step_name, duration)
 
         self._provided_arguments_dict = {
             ENCASTRE_BC: encastre_bc,
