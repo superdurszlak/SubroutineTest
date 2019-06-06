@@ -25,7 +25,7 @@ class BaseBorderConditionsBuilder(BaseBuilder):
 
     @staticmethod
     def _create_displacement_bc(model_name, assembly_name, movable_grip_set, displacement_bc, grip_displacement,
-                                 step_name):
+                                step_name):
         amplitude_name = 'Tabular_linear_amp'
         root_assembly = mdb.models[model_name].rootAssembly
         region = root_assembly.instances[assembly_name].sets[movable_grip_set]
@@ -35,6 +35,7 @@ class BaseBorderConditionsBuilder(BaseBuilder):
         mdb.models[model_name].TabularAmplitude(name=amplitude_name, timeSpan=STEP,
                                                 smooth=SOLVER_DEFAULT, data=((0.0, 0.0), (1.0, 1.0)))
         mdb.models[model_name].boundaryConditions[displacement_bc].setValuesInStep(stepName=step_name,
+                                                                                   amplitude=amplitude_name,
                                                                                    u1=0.0,
                                                                                    u2=grip_displacement,
                                                                                    u3=0.0,
