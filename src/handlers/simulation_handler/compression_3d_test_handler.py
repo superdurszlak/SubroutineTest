@@ -89,9 +89,11 @@ class Compression3DTestHandler(BaseSimulationHandler):
 
         displacement = self.tool_displacement.get()
 
+        duration = self.duration.get()
+
         negated_displacement = displacement * -1.0
 
-        tool_radius = radius * max(length / (length - displacement) * 1.1, 1.5)
+        tool_radius = radius * max(length / (length - displacement) * 2.2, 3.0)
 
         return {
             SPECIMEN_BASE_RADIUS: radius * scaling_factor,
@@ -101,7 +103,7 @@ class Compression3DTestHandler(BaseSimulationHandler):
             SPECIMEN_TEMPERATURE: self.initial_temperature.get(),
             MESH_EDGE_LENGTH: self.mesh_edge_length.get() * scaling_factor,
             FRICTION_COEFFICIENT: self.friction_coefficient.get(),
-            DISPLACEMENT_DURATION: self.duration.get(),
+            DISPLACEMENT_DURATION: duration,
             TOOL_DISPLACEMENT: negated_displacement * scaling_factor,
             TOOL_RADIUS: tool_radius * scaling_factor
         }
