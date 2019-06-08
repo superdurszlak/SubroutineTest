@@ -37,7 +37,7 @@ class JobBuilder(BaseBuilder):
         mdb.Job(name=job_name, model=model_name, description=job_description, type=ANALYSIS, atTime=None,
                 waitMinutes=0, waitHours=0, queue=None, memory=90,
                 memoryUnits=PERCENTAGE, getMemoryFromAnalysis=True,
-                explicitPrecision=SINGLE, nodalOutputPrecision=SINGLE, echoPrint=OFF,
+                explicitPrecision=DOUBLE_PLUS_PACK, nodalOutputPrecision=FULL, echoPrint=OFF,
                 modelPrint=OFF, contactPrint=OFF, historyPrint=OFF,
                 userSubroutine=subroutine_path, scratch='',
                 resultsFormat=ODB, multiprocessingMode=DEFAULT, numCpus=cpu_count, numGPUs=0, numDomains=cpu_count)
