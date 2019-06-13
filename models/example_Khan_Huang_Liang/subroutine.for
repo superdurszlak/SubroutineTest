@@ -23,12 +23,12 @@ C
       einv = 1.0D0 / max(e, 1.0D-2)
       edot = max(EQPLASRT, 1.0D-6)
       edlog = max(log(edot), 1.0D-2)
-      edinv = 1.0D0 / max(edotn, 1.0D-2)
+      edinv = 1.0D0 / max(edot, 1.0D-2)
       T = TEMP
       Th = (T - Tr) / (Tm - Tr)
       Th = min(1.0D0, max(0.0D0, Th))
 
-      Ehard = A + B * (e ** n0) * (1.0D0 - (edlog/Dlog) ** n1)
+      Ehard = A + B * (e ** n0) * ((1.0D0 - (edlog/Dlog)) ** n1)
       Ehard_e = B * n0 * (einv ** (1.0D0 - n0)) * (1 - (edlog/Dlog) ** n1)
       Ehard_ed = - B * (e ** n0) * ((edinv / Dlog) ** n1) * n1 * ((Dlog/edlog) ** (1.0D0 - n1))
 
@@ -88,15 +88,15 @@ C
           e = max(EQPS(km), 1.0D-6)
           einv = 1.0D0 / max(e, 1.0D-2)
           edot = max(EQPSRATE(km), 1.0D-6)
-          edlog = max(log(edot), 1.0D-2)
-          edinv = 1.0D0 / max(edotn, 1.0D-2)
+          edlog = max(log(edot), -1.0D-3)
+          edinv = 1.0D0 / max(edot, 1.0D-2)
           T = TEMPOLD(km)
           Th = (T - Tr) / (Tm - Tr)
           Th = min(1.0D0, max(0.0D0, Th))
 
-          Ehard = A + B * (e ** n0) * (1.0D0 - (edlog/Dlog) ** n1)
-          Ehard_e = B * n0 * (einv ** (1.0D0 - n0)) * (1 - (edlog/Dlog) ** n1)
-          Ehard_ed = - B * (e ** n0) * ((edinv / Dlog) ** n1) * n1 * ((Dlog/edlog) ** (1.0D0 - n1))
+          Ehard = A + B * (e ** n0) * ((1.0D0 - (edlog/Dlog)) ** n1)
+          Ehard_e = B * n0 * (einv ** (1.0D0 - n0)) * (1.0D0 - (edlog/Dlog)) ** n1
+          Ehard_ed = - B * (e ** n0) * (n1 * (1.0D0 - (edlog/Dlog)) ** (n1 - 1.0D0)) * edinv / Dlog
 
           EDhard = edot ** C
           EDhard_ed = C * edinv ** (1.0D0 - C)
